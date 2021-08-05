@@ -1,4 +1,5 @@
 /* Copyright (c) 1992 AT&T - All rights reserved. */
+#include <u.h>
 #include <libc.h>
 #include <libg.h>
 #include "libgint.h"
