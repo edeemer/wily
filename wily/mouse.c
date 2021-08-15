@@ -151,13 +151,17 @@ action(View *v, Mouse *m, Range r, ulong oldbuttons) {
 		} else {
 			b2(v,r,false);
 		}
-	} else {
-		assert((oldbuttons&RIGHT));
+	} else if (oldbuttons & RIGHT) {
 		if(m->buttons)	/* cancelled a b3 */
 			while (m->buttons)
 				*m = emouse();
 		else
 			b3(v, r);
+	} else if (oldbuttons & WHEELUP) {
+		view_linesdown(v, 2, false);
+	} else {
+		assert((oldbuttons&WHEELDOWN));
+		view_linesdown(v, 2, true);
 	}
 }
 

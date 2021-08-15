@@ -27,7 +27,7 @@ enum {
 	INSET = 4,
 
 	/* mouse buttons */
-	LEFT =1, MIDDLE=2, RIGHT=4,	
+	LEFT =1, MIDDLE=2, RIGHT=4, WHEELUP=8, WHEELDOWN=16,
 
 	/* keys */
 	Backspace =	0x7f,
