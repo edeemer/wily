@@ -168,3 +168,16 @@ text_startofword(Text *t, ulong p0) {
 	return t->pos + (c!=-1);
 }
 
+/*
+ * Find start of file name, going back from p0.
+ */
+ulong
+text_startofname(Text *t, ulong p0) {
+	int c;
+
+	Tbgetcset(t, p0);
+	while((c = Tbgetc(t)) !=-1 && okchar(c,notfilename))
+		p0--;
+	return p0;
+}
+

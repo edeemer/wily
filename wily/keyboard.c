@@ -27,7 +27,9 @@ dokeyboard(View *v, Rune r) {
 	
 	case PageDown:	
 	case PageUp:		view_pagedown(v,r==PageDown); break;
-	
+
+	case Insert:		completename(v); break;
+
 	case Ctrlh:
 	case Backspace:	backspace(v); break;
 	case Ctrlu:		deleteline(v); break;

@@ -39,6 +39,7 @@ enum {
 	UpArrow = 	0x85,
 	Home =		0x86	,
 	End =		0x87,
+	Insert =	0x88,
 	NEWLINE = 	'\n',
 	Ctrlh = 		010,
 	Ctrlu = 		025,

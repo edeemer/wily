@@ -313,6 +313,10 @@ Keyaction(Widget w, XEvent *e, String *p, Cardinal *np)
 		case XK_End:
 			k = 0x87;	/* End */
 			break;
+		case XK_Insert:
+		case XK_KP_Insert:
+			k = 0x88;	/* Insert */
+			break;
 		default:
 			c = keysym2ucs(k);
 			if(c == 0)

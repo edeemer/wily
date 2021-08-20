@@ -13,12 +13,16 @@ Bool	builtin			(View *, char *, char*);
 /* click.c */
 Range	text_doubleclick	(Text *, ulong);
 Range	text_expand		(Text *, Range, char *);
+ulong	text_startofname	(Text *, ulong);
 ulong	text_startofword	(Text *, ulong);
 
 /* col.c */
 Tile*		tile_col			(Tile*);
 void		col_new			(View*v, char *arg);
 void		col_del		(Tile*);
+
+/* complete.c */
+void		completename	(View*v);
 
 /* data.c */
 Text*	data_body	(Data*);
