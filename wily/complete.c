@@ -30,8 +30,12 @@ completename(View*v) {
 		dir = cdirname(what);
 		file = cbasename(what);
 	} else {
-		label2path(cwd, v->t->data->label);
-		n = snprintf(cat, sizeof(cat), "%s%s", cwd, what);
+		if(v->t->data) {
+			label2path(cwd, v->t->data->label);
+			n = snprintf(cat, sizeof(cat), "%s%s", cwd, what);
+		}
+		else
+			n = snprintf(cat, sizeof(cat), "%s%s", wilydir, what);
 		if(n >= sizeof(cat))
 			goto ret;
 		dir = cdirname(cat);
