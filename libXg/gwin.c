@@ -462,7 +462,7 @@ SelCallback(Widget w, XtPointer cldata, Atom *sel, Atom *seltype,
 
 	if(gw->gwin.selection)
 		XtFree(gw->gwin.selection);
-	if(*seltype != XA_STRING)
+	if(*seltype != XInternAtom(XtDisplay(w), "UTF8_STRING", 0))
 		n = 0;
 	else
 		n = (*len) * (*fmt/8);
@@ -487,7 +487,7 @@ SendSel(Widget w, Atom *sel, Atom *target, Atom *rtype, XtPointer *ans,
 		s = gw->gwin.selection;
 		if(!s)
 			s = "";
-		*rtype = XA_STRING;
+		*rtype = XInternAtom(XtDisplay(w), "UTF8_STRING", 0);
 		*ans = (XtPointer) XtNewString(s);
 		*anslen = strlen(*ans);
 		*ansfmt = 8;
@@ -570,7 +570,9 @@ get_selection(Widget w)
 	XtGetSelectionValue(w, XA_PRIMARY, XA_STRING, SelCallback, 0,
 			CurrentTime);
 #else
-	XtGetSelectionValue(w, XA_PRIMARY, XA_STRING, SelCallback, 0,
+	XtGetSelectionValue(w, XInternAtom(XtDisplay(w), "PRIMARY", 0),
+			XInternAtom(XtDisplay(w), "UTF8_STRING", 0), 
+			SelCallback, 0,
 			XtLastTimestampProcessed(XtDisplay(w)));
 #endif
 }
