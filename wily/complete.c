@@ -32,6 +32,7 @@ completename(View*v) {
 	} else {
 		if(v->t->data) {
 			label2path(cwd, v->t->data->label);
+			dirnametrunc(cwd);
 			n = snprintf(cat, sizeof(cat), "%s%s", cwd, what);
 		}
 		else
