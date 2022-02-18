@@ -94,8 +94,8 @@ cbasename(char *s) {
 /* return completed file name; print suggestions */
 static char *
 complete(char *dir, char *name) {
-	struct dirent *d, *last=NULL, **dirs;
-	char *ret, *nl;
+	struct dirent *last=NULL, **dirs;
+	char *ret;
 	char *minlast = NULL;
 	int i, nfile, lastlen;
 	unsigned int ngood = 0, minmatch = ~0, match;
