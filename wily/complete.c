@@ -19,52 +19,43 @@ void
 completename(View*v) {
 	Path cwd;
 	Path cat;
-	char *dir=0, *file=0, *whatdir=0;
-	char *what, *res;
+	Path path;
+	char *dir=0, *file=0, *res=0;
+	char *name;
 	int n;
 	Range r = v->sel;
 
 	r.p0 = text_startofname(v->t, r.p0);
-	what = text_duputf(v->t, r);
-	if(what[0] == '/') {
-		dir = cdirname(what);
-		file = cbasename(what);
-	} else {
-		if(v->t->data) {
-			label2path(cwd, v->t->data->label);
-			dirnametrunc(cwd);
-			n = snprintf(cat, sizeof(cat), "%s%s", cwd, what);
-		}
-		else
-			n = snprintf(cat, sizeof(cat), "%s%s", wilydir, what);
-		if(n >= sizeof(cat))
+	name = text_duputf(v->t, r);
+	if(name[0] == '/' || name[0] == '~' || name[0] == '$') {
+		if(!strchr(name, '/'))
 			goto ret;
-		dir = cdirname(cat);
-		file = cbasename(what);
-	}
+		label2path(path, name);
+	} else {
+		label2path(cwd, v->t->data->label);
+		dirnametrunc(cwd);
+		n = snprintf(path, sizeof path, "%s%s", cwd, name);
+		if(n < 0)
+			goto ret;
+	} 
+	dir = cdirname(path);
+	file = cbasename(path);
 	res = complete(dir, file);
 	if(res) {
-		whatdir = cdirname(what);
-		if(strchr(what, '/')) {
-			n = snprintf(cat, sizeof(cat), "%s%s",
-				whatdir, res);
-			if(n < 0)
-				goto ret;
-			text_replaceutf(v->t, r, cat);
-		} else {
-			text_replaceutf(v->t, r, res);
-		}
+		n = snprintf(cat, sizeof(cat), "%s%s", dir, res);
+		if(n < 0)
+			goto ret;
+		r.p0 = r.p1 - utflen(file);
+		text_replaceutf(v->t, r, res);
 	}
 ret:
-	free(what);
+	free(name);
 	if(res)
 		free(res);
 	if(dir)
 		free(dir);
 	if(file)
 		free(file);
-	if(whatdir)
-		free(whatdir);
 }
 
 static char *
