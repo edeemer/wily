@@ -28,7 +28,6 @@ give tags different background colour
 international characters entry
 	use X11R6 "input extensions"? (schwartz)
 	extra process monitors (and modifies) inputted text (Steve_Kilbane)
-newline in tag on _directory_ could mean 'open that directory'
 scrolling tag -- always show RIGHTmost stuff
 experiment with DontList _regexp_ to restrict directory listings dir.c:#1227 (Elliott Hughes)
 -title option

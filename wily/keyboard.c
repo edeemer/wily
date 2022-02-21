@@ -3,11 +3,14 @@
  *******************************************/
 
 #include "wily.h"
+#include "data.h"
+#include "text.h"
 #include "view.h"
 
 static void		view_cursor(View *v, Rune r);
 static void		addrune(View*v, Rune r);
 static void		tag_cr(View *v);
+static void		searchorexec(View *v);
 static void		backspace(View*v);
 static void		deleteline(View*v);
 static void		deleteword(View*v);
@@ -45,14 +48,27 @@ dokeyboard(View *v, Rune r) {
 	static functions
 ******************************************************/
 
-/* Handle carriage-return in 'v'
- *
- * Select text as if we hit escape,
+/* Handle carriage-return in 'v'.
+ * If cursor is on label, 'Get' it. Search or execute selected
+ * text otherwise.
+ */
+static void
+tag_cr(View*v) {
+	int n;
+
+	n = v->t->data ? utflen(v->t->data->label) : 0;
+	if(n && (v->sel.p0 > n+1 || RLEN(v->sel)))
+		searchorexec(v);
+	else
+		run(v, "Get", 0);
+}
+
+/* Select text as if we hit escape,
  * and either search (if selected text starts with ':')
  * or execute the selected text.
  */
 static void
-tag_cr(View*v) {
+searchorexec(View*v) {
 	char*cmd;
 	
 	if(!RLEN(v->sel)){
