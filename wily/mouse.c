@@ -158,10 +158,16 @@ action(View *v, Mouse *m, Range r, ulong oldbuttons) {
 		else
 			b3(v, r);
 	} else if (oldbuttons & WHEELUP) {
-		view_linesdown(v, 2, false);
+		if(v->scroll)
+			view_linesdown(v, 2, false);
+		else
+			view_hscroll(v, true);
 	} else {
 		assert((oldbuttons&WHEELDOWN));
-		view_linesdown(v, 2, true);
+		if(v->scroll)
+			view_linesdown(v, 2, true);
+		else
+			view_hscroll(v, false);
 	}
 }
 
