@@ -32,8 +32,12 @@ completename(View*v) {
 			goto ret;
 		label2path(path, name);
 	} else {
-		label2path(cwd, v->t->data->label);
-		dirnametrunc(cwd);
+		if(v->t->data) {
+			label2path(cwd, v->t->data->label);
+			dirnametrunc(cwd);
+		}
+		else
+			strcpy(cwd, wilydir);
 		n = snprintf(path, sizeof path, "%s%s", cwd, name);
 		if(n < 0)
 			goto ret;
