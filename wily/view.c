@@ -300,6 +300,7 @@ view_warp (View *v, Range r)
 	assert(ISVISIBLE(v));
 	
 	pt = frptofchar(&v->f, r.p0 - v->visible.p0);
+	pt.x += 3;
 	pt.y += v->f.font->height/2;	/* middle of char */
 	cursorset(pt);
 }
