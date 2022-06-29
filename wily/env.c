@@ -43,7 +43,7 @@ pathcontract(char*dest, char *orig) {
 	if(orig[0]=='/' && contract(dest, orig)) {
 		;	/* we're done */
 	} else {
-		strcpy(dest,orig);
+		memmove(dest, orig, strlen(orig) + 1);
 	}
 }
 
