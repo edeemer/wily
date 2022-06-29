@@ -17,7 +17,6 @@ enum {
 	MAXTRIES = 10	/* number of names to try for fifo */
 };
 static int		findname(char *);
-static void	addenv(char*key, char *val);
 static char	*myfifo=0;
 
 /* Return file descriptor open for reading connection requests,
@@ -51,7 +50,7 @@ wilyfifolisten(void)
 		return -1;
 	}
 
-	addenv(WILYFIFO, name);
+	setenv(WILYFIFO, name, 1);
 	myfifo = strdup(name);
 
 	return fd;
@@ -191,14 +190,3 @@ findname(char *buf)
 	sprintf(buf, "%s/wily%s%s", dir, pw->pw_name, disp);
 	return 0;
 }
-
-static void
-addenv(char*key, char *val)
-{
-	char *buf;
-
-	buf = salloc(strlen(key) + strlen(val) + 2);
-	sprintf(buf, "%s=%s", key, val);
-	putenv(buf);
-}
-
