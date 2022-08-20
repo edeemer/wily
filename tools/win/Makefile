@@ -12,9 +12,9 @@ INSTALL			= ./install-sh -c
 INSTALL_DATA	= ${INSTALL} -m 644
 
 CC				= gcc
-CFLAGS			= -g -O -I.. -I$(srcdir)/../include -I$(srcdir)/../sam/include
+CFLAGS			= -g -O -I.. -I../.. -I$(srcdir)/../../include
 DEFS			=  -DHAVE_LIBNSL=1 -DHAVE_LIBSOCKET=1 -DHAVE_DEV_PTMX=1 -DHAVE_SYS_PTEM_H=1 
-LIBS			= -lsocket -lnsl  ../libmsg/libmsg.a  ../sam/libXg/libXg.a
+LIBS			= -lsocket -lnsl  ../../libmsg/libmsg.a  ../../libXg/libXg.a
 LDFLAGS			= 
 
 RC				= /usr/pgrad/gary/bin/sun4d/rc

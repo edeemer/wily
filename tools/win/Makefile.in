@@ -12,9 +12,9 @@ INSTALL			= @INSTALL@
 INSTALL_DATA	= @INSTALL_DATA@
 
 CC				= @CC@
-CFLAGS			= @CFLAGS@ -I.. -I$(srcdir)/../include -I$(srcdir)/../sam/include
+CFLAGS			= @CFLAGS@ -I../.. -I$(srcdir)/../../include
 DEFS			= @DEFS@
-LIBS			= @LIBS@ ../libmsg/libmsg.a  ../sam/libXg/libXg.a
+LIBS			= @LIBS@ ../../libmsg/libmsg.a  ../../libXg/libXg.a
 LDFLAGS			= @LDFLAGS@
 
 RC				= @RC@
