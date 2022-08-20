@@ -17,11 +17,6 @@ char *readfd(int);
 
 #define STRINGIZE2(x) #x
 #define STRINGIZE(x) STRINGIZE2(x)
-#ifdef __GNUC__
-	#define here " at " __FILE__ ":" STRINGIZE(__LINE__) " in " __FUNCTION__ "()"
-#else
-	#define here " at " __FILE__ ":" STRINGIZE(__LINE__)
-#endif
 
 #define PROGRAMNAME		"wgoto"
 #define VERSIONNAME		"%R%.%L% of %D%"
@@ -65,7 +60,7 @@ main(int argc, char **argv)
 	/* open connection */
 	wilyfd = client_connect();
 	if (wilyfd < 0) {
-		error("client_connect() failed" here);
+		error("client_connect() failed");
 		exit(1);
 	}
 	handle = rpc_init(wilyfd);
@@ -73,7 +68,7 @@ main(int argc, char **argv)
 	/* get address */
 	msg = rpc_goto(handle, &id, &r, strdup(address), 1);
 	if (msg != 0) {
-		error("rpc_goto() failed" here ": %s", msg);
+		error("rpc_goto() failed: %s", msg);
 		exit(1);
 	}
 	if (r.p0 > r.p1) {

@@ -64,11 +64,6 @@ void setslaveattr(void);
 
 #define stringize2(x) #x
 #define stringize(x) stringize2(x)
-#if defined(__GNUC__)
-	#define here " at " __FILE__ ":" stringize(__LINE__) " in " __FUNCTION__ "()"
-#else
-	#define here " at " __FILE__ ":" stringize(__LINE__)
-#endif
 
 #define PROGRAMNAME		"win"
 #define VERSIONNAME		"%R%.%L% of %D%"
@@ -158,7 +153,7 @@ getshell(void)
 
 	shell = malloc(strlen(path) + 1);
 	if (shell == 0) {
-		error("malloc() failed" here);
+		error("malloc() failed");
 		exit(1);
 	}
 	
@@ -190,7 +185,7 @@ flatlist(char **v)
 			
 	s = malloc(len + 1);
 	if (s == 0) {
-		error("malloc() failed" here);
+		error("malloc() failed");
 		exit(1);
 	}
 		
@@ -225,7 +220,7 @@ execshell(char **argv)
 	}
 			
 	execl(arg0, arg0, arg1, arg2, 0);
-	error("execl(%s, ...) failed" here, arg0);
+	error("execl(%s, ...) failed", arg0);
 	exit(1);
 }
 
@@ -273,7 +268,7 @@ forkshell(char **argv)
 	
 	case -1:
 	
-		error("fork() failed" here);
+		error("fork() failed");
 		exit(1);
 		
 	case 0:
@@ -288,7 +283,7 @@ forkshell(char **argv)
 		close(master);
 		
 		if (setsid() < 0) {
-			error("setsid() failed" here);
+			error("setsid() failed");
 			exit(1);
 		}
 		
@@ -301,7 +296,7 @@ forkshell(char **argv)
 		#endif
 		
 		if(dup2(slave, 0) < 0 || dup2(slave, 1) < 0 || dup2(slave, 2) < 0) {
-			error("dup2() failed" here);
+			error("dup2() failed");
 			exit(1);
 		}
 		close(slave);
@@ -333,7 +328,7 @@ ipcinit(char *tagname)
 	
 	wilyfifo = client_connect();
 	if (wilyfifo < 0) {
-		error("client_connect() failed" here);
+		error("client_connect() failed");
 		exit(1);
 	}
 	
@@ -341,13 +336,13 @@ ipcinit(char *tagname)
 	
 	msg = rpc_new(handle, tagname, &id, 0);
 	if (msg != 0) {
-		error("rpc_new() failed" here ": %s", msg);
+		error("rpc_new() failed: %s", msg);
 		exit(1);
 	}
 	
 	msg = rpc_attach(handle, id, WEexec|WEreplace|WEdestroy);
 	if (msg != 0) {
-		error("rpc_attach() failed" here ": %s", msg);
+		error("rpc_attach() failed: %s", msg);
 		exit(1);
 	}
 	
@@ -374,7 +369,7 @@ ipcloop(void)
 		FD_SET(master, &readfds);
 		nready = select(FD_SETSIZE, &readfds, 0, 0, 0);
 		if (nready < 0) {
-			error("select() failed" here);
+			error("select() failed");
 			exit(1);
 		}
 		if (FD_ISSET(master, &readfds))
@@ -382,7 +377,7 @@ ipcloop(void)
 		else if (FD_ISSET(wilyfifo, &readfds))
 			handlemsg();
 		else {
-			error("select() returned in error" here);
+			error("select() returned in error");
 			exit(1);
 		}
 			
@@ -402,7 +397,7 @@ getlength(void)
 	
 	msg = rpc_goto(handle, &id, &r, strdup(":,"), 0);
 	if (msg != 0) {
-		error("rpc_goto() failed " here ": %s", msg);
+		error("rpc_goto() failed: %s", msg);
 		exit(1);
 	}
 	return r.p1;
@@ -422,7 +417,7 @@ gettagname(char *shorttagname)
 	
 	tagname = malloc(strlen(shorttagname) + 2);
 	if (tagname == 0) {
-		error("malloc() failed" here);
+		error("malloc() failed");
 		exit(1);
 	}
 	
@@ -445,7 +440,7 @@ handleshelloutput(void)
 	
 	nread = read(master, buf, BUFSIZ);
 	if (nread < 0) {
-		error("read() failed in shellinput()" here);
+		error("read() failed in shellinput()");
 		exit(1);
 	}
 	
@@ -455,7 +450,7 @@ handleshelloutput(void)
 	buf[nread] = '\0';
 	msg = rpc_replace(handle, id, range(outputpoint, outputpoint), buf);
 	if (msg != 0) {
-		error("rpc_replace() failed" here ": %s", msg);
+		error("rpc_replace() failed: %s", msg);
 		exit(1);
 	}
 		
@@ -509,7 +504,7 @@ handleWEexec(Msg *m)
 	addnewline = (m->s[nbytes - 1] != '\n');
 	cmd = malloc(nbytes + addnewline + 1);
 	if (cmd == 0) {
-		error("malloc() failed" here);
+		error("malloc() failed");
 		exit(1);
 	}
 	strcpy(cmd, m->s);
@@ -518,7 +513,7 @@ handleWEexec(Msg *m)
 			
 	msg = rpc_replace(handle, id, range(length, length), cmd);
 	if (msg != 0) {
-		error("rpc_replace() failed " here ": %s", msg);
+		error("rpc_replace() failed: %s", msg);
 		exit(1);
 	}
 		
@@ -555,7 +550,7 @@ handleshellinput(Msg *m)
 
 	buf = malloc(UTFmax * (lastpoint - outputpoint + 1));
 	if (buf == 0) {
-		error("malloc() failed" here);
+		error("malloc() failed");
 		exit(1);
 	}
 		
@@ -563,7 +558,7 @@ handleshellinput(Msg *m)
 	
 	len = strlen(buf);
 	if (write(master, buf, len) != len) {
-		error("write() failed" here);
+		error("write() failed");
 		exit(1);
 	}
 	
@@ -605,7 +600,7 @@ handleWEreplace(Msg *m)
 			sprintf(buf, ":#%lu", outputpoint);
 			msg = rpc_goto(handle, &id, &r, strdup(buf), 0);
 			if (msg != 0) {
-				error("rpc_goto() failed " here ": %s", msg);
+				error("rpc_goto() failed: %s", msg);
 				exit(1);
 			}
 		}
@@ -634,7 +629,7 @@ handlemsg(void)
 	Msg	m;
 
 	if (rpc_event(handle, &m) != 0) {
-		error("rpc_event() failed" here);
+		error("rpc_event() failed");
 		exit(1);
 	}
 
@@ -648,7 +643,7 @@ handlemsg(void)
 		handleWEreplace(&m);
 		break;
 	default:
-		error("unexpected message type" here);
+		error("unexpected message type");
 	}
 }
 
@@ -670,7 +665,7 @@ openmaster(void)
 
 		slavename = _getpty(&master, O_RDWR, ttymode, 0);
 		if (slavename == 0) {
-			error("_getpty() failed" here);
+			error("_getpty() failed");
 			exit(1);
 		}
 	}
@@ -686,15 +681,15 @@ openmaster(void)
 		
 		master = open("/dev/ptmx", O_RDWR);
 		if (master < 0) {
-			error("open() failed" here);
+			error("open() failed");
 			exit(1);
 		}
 		if (grantpt(master) < 0) {
-			error("grantpt() failed" here);
+			error("grantpt() failed");
 			exit(1);
 		}
 		if (unlockpt(master) < 0) {
-			error("unlockpt() failed" here);
+			error("unlockpt() failed");
 			exit(1);
 		}
 		
@@ -702,7 +697,7 @@ openmaster(void)
 
 		slavename = ptsname(master);
 		if (slavename == 0) {
-			error("ptsname() failed" here);
+			error("ptsname() failed");
 			exit(1);
 		}				
 
@@ -726,7 +721,7 @@ openmaster(void)
 			} while (master < 0 && *++c2 != 0);
 		} while (master < 0 && *++c1 != 0);
 		if (master < 0) {
-			error("unable to open master pty" here);
+			error("unable to open master pty");
 			exit(1);
 		}
 		
@@ -749,7 +744,7 @@ openslave(void)
 {	
 	slave = open(slavename, O_RDWR);
 	if (slave < 0) {
-		error("open() failed" here);
+		error("open() failed");
 		exit(1);
 	}
 	
@@ -783,7 +778,7 @@ setslaveattr(void)
 	#endif
 
 	if (tcgetattr(slave, &attr) < 0) {
-		error("tcgetattr() failed" here);
+		error("tcgetattr() failed");
 		exit(1);
 	}
 
@@ -797,7 +792,7 @@ setslaveattr(void)
 	attr.c_cc[VEOF]  = eofchar;
 
 	if (tcsetattr(slave, TCSANOW, &attr) < 0) {
-		error("tcsetattr() failed" here);
+		error("tcsetattr() failed");
 		exit(1);
 	}
 }

@@ -17,11 +17,6 @@ char *readfd(int);
 
 #define STRINGIZE2(x) #x
 #define STRINGIZE(x) STRINGIZE2(x)
-#ifdef __GNUC__
-	#define here " at " __FILE__ ":" STRINGIZE(__LINE__) " in " __FUNCTION__ "()"
-#else
-	#define here " at " __FILE__ ":" STRINGIZE(__LINE__)
-#endif
 
 #define PROGRAMNAME		"wreplace"
 #define VERSIONNAME		"%R%.%L% of %D%"
@@ -75,7 +70,7 @@ main(int argc, char **argv)
 	/* open connection */
 	wilyfd = client_connect();
 	if (wilyfd < 0) {
-		error("client_connect() failed" here);
+		error("client_connect() failed");
 		exit(1);
 	}
 	handle = rpc_init(wilyfd);
@@ -85,7 +80,7 @@ main(int argc, char **argv)
 		filename = getfilename(address);
 		msg = rpc_new(handle, filename, &id, backup);
 		if (msg != 0) {
-			error("rpc_new() failed" here ": %s", msg);
+			error("rpc_new() failed: %s", msg);
 			exit(1);
 		}
 	}
@@ -93,7 +88,7 @@ main(int argc, char **argv)
 	/* get address */
 	msg = rpc_goto(handle, &id, &r, strdup(address), 1);
 	if (msg != 0) {
-		error("rpc_goto() failed" here ": %s", msg);
+		error("rpc_goto() failed: %s", msg);
 		exit(1);
 	}
 	if (r.p0 > r.p1) {
@@ -104,7 +99,7 @@ main(int argc, char **argv)
 	/* do replacement */
 	msg = rpc_replace(handle, id, r, readfd(0));
 	if (msg != 0) {
-		error("rpc_replace() failed " here ": %s", msg);
+		error("rpc_replace() failed: %s", msg);
 		exit(1);
 	}
 	
@@ -151,7 +146,7 @@ getfilename(char *address)
 	
 	filename = malloc(len + 1);
 	if (filename == 0) {
-		error("malloc() failed" here);
+		error("malloc() failed");
 		exit(1);
 	}
 	
@@ -184,14 +179,14 @@ readfd(int fd)
 			bufsize += bufquantum;
 			buf = realloc(buf, bufsize);
 			if (buf == 0) {
-				error("realloc() failed" here);
+				error("realloc() failed");
 				exit(1);
 			}
 		}
 		
 		nread = read(fd, buf + buflen, bufsize - buflen - 1);
 		if (nread < 0) {
-			error("read() failed" here);
+			error("read() failed");
 			exit(1);
 		}
 		
