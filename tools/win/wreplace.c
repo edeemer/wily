@@ -27,7 +27,7 @@ char usageinfo[]	= "usage: " PROGRAMNAME " [-v] [-c] [-b] address";
 
 char whatinfo[]		= "@(#)" PROGRAMNAME " " VERSIONNAME;
 
-void
+int
 main(int argc, char **argv)
 {
 	int c;

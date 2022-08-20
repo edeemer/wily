@@ -74,7 +74,7 @@ char usageinfo[]	= "usage: " PROGRAMNAME " [-v] [-t tagname] [command [argument 
 
 char whatinfo[]		= "@(#)" PROGRAMNAME " " VERSIONNAME;
 
-void
+int
 main(int argc, char **argv)
 {
 	int c;
