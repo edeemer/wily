@@ -279,14 +279,9 @@ history(char *cmd) {
 /* Add some stuff to the environment of our child */
 static void
 childenv(char *label,char*path) {
-	Path	buf;
-
-	sprintf(buf, "WILYLABEL=%s", label);
-	(void)putenv(strdup(buf));
-	sprintf(buf, "WILYPATH=%s", path);
-	(void)putenv(strdup(buf));
-	sprintf(buf, "w=%s", path);
-	(void)putenv(strdup(buf));
+	(void)setenv("WILYLABEL", label, 1);
+	(void)setenv("WILYPATH", path, 1);
+	(void)setenv("w", path, 1);
 }
 
 /*
