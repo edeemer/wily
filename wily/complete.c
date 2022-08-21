@@ -8,9 +8,9 @@
 #include "view.h"
 #include <libgen.h>
 
-static char *		complete(char *dir, char *file);
-static char *		cdirname(char *s);
-static char *		cbasename(char *s);
+static void		complete(char *dir, char *file, char *res);
+static void		cdirname(char *s, char *out);
+static void		cbasename(char *s, char *out);
 static unsigned int	nmatch(char *a, char *b);
 static void		suggest(struct dirent **files, int n, char *name);
 
@@ -20,7 +20,8 @@ completename(View*v) {
 	Path cwd;
 	Path cat;
 	Path path;
-	char *dir=0, *file=0, *res=0;
+	Path res;
+	Path dir, file;
 	char *name;
 	int n;
 	Range r = v->sel;
@@ -42,10 +43,10 @@ completename(View*v) {
 		if(n < 0)
 			goto ret;
 	} 
-	dir = cdirname(path);
-	file = cbasename(path);
-	res = complete(dir, file);
-	if(res) {
+	cdirname(path, dir);
+	cbasename(path, file);
+	complete(dir, file, res);
+	if(*res) {
 		n = snprintf(cat, sizeof(cat), "%s%s", dir, res);
 		if(n < 0)
 			goto ret;
@@ -54,58 +55,55 @@ completename(View*v) {
 	}
 ret:
 	free(name);
-	if(res)
-		free(res);
-	if(dir)
-		free(dir);
-	if(file)
-		free(file);
 }
 
-static char *
-cdirname(char *s) {
-	char *ret;
+static void
+cdirname(char *s, char *out) {
 	int len;
 
-	if(!*s)
-		return strdup(".");
-	ret = strdup(s);
+	if(!*s) {
+		strcpy(out, ".");
+		return;
+	}
+	strcpy(out, s);
 	len = strlen(s);
 	len--;
-	if(ret[len] == '/')
-		return ret;
+	if(out[len] == '/')
+		return;
 	for(; len >= 0; len--) {
-		if(ret[len] == '/') {
-			ret[len+1] = '\0';
+		if(out[len] == '/') {
+			out[len+1] = '\0';
 			break;
 		}
 	}
-	return ret;
 }
 
-static char *
-cbasename(char *s) {
+static void
+cbasename(char *s, char *out) {
 	int len;
 
 	len = strlen(s) - 1;
 	for(; len >= 0; len--) {
-		if(s[len] == '/')
-			return strdup(s + len + 1);
+		if(s[len] == '/') {
+			strcpy(out, s + len + 1);
+			return;
+		}
 	}
-	return strdup(s);
+	strcpy(out, s);
 }
 
 /* return completed file name; print suggestions */
-static char *
-complete(char *dir, char *name) {
+static void
+complete(char *dir, char *name, char *res) {
 	struct dirent *last=NULL, **dirs;
-	char *ret;
 	char *minlast = NULL;
 	int i, nfile, lastlen;
 	unsigned int ngood = 0, minmatch = ~0, match;
 
-	if((nfile = scandir(dir, &dirs, NULL, &alphasort)) < 0)
-		return NULL;
+	if((nfile = scandir(dir, &dirs, NULL, &alphasort)) < 0) {
+		*res = '\0';
+		return;
+	}
 	for(i = 0; i < nfile; i++) {
 		if(strcmp(dirs[i]->d_name, ".") == 0)
 			continue;
@@ -126,40 +124,40 @@ complete(char *dir, char *name) {
 		}
 	}
 	if(ngood == 0) {
-		ret = NULL;
+		*res = '\0';
 	} else if(ngood == 1) {
 		lastlen = strlen(last->d_name);
-		ret = malloc(lastlen + 2);
-		strncpy(ret, last->d_name, lastlen);
-		ret[lastlen] = last->d_type&DT_DIR ? '/' : ' ';
-		ret[lastlen+1] = '\0';
+		if(lastlen + 2 >= sizeof(Path)) {
+			*res = '\0';
+		}
+		else {
+			strncpy(res, last->d_name, lastlen);
+			res[lastlen] = last->d_type&DT_DIR ? '/' : ' ';
+			res[lastlen+1] = '\0';
+		}
 	} else {
 		if(minmatch == strlen(name))
 			suggest(dirs, nfile, name);
-		ret = malloc(minmatch + 1);
-		strncpy(ret, last->d_name, minmatch);
-		ret[minmatch] = 0;
+		strncpy(res, last->d_name, MIN(minmatch, sizeof(Path)));
+		res[minmatch] = '\0';
 	}
 	for(i = 0; i < nfile; i++)
 		free(dirs[i]);
 	free(dirs);
-	return ret;
 }
 
 /* print suggestions to +Errors */
 static void
 suggest(struct dirent **d, int n, char *name) {
-	char *nl, *amount;
+	char amount[32];
+	char nl[] = "\n";
 	int i;
 
-	nl = strdup("\n");
-	amount = malloc(32);
 	if(strcmp(name, "") == 0 && n > 64) {
-		if(snprintf(amount, 31, "[%d files]\n", n-2) < 0)
-			goto ret;
-		amount[31] = '\0';
+		if(snprintf(amount, sizeof(amount), "[%d files]\n", n-2) < 0)
+			return;
 		noutput(0, amount, strlen(amount));
-		goto ret;
+		return;
 	}
 	for(i = 0; i < n; i++) {
 		if(strcmp(d[i]->d_name, ".") == 0)
@@ -171,9 +169,6 @@ suggest(struct dirent **d, int n, char *name) {
 			noutput(0, nl, 1);
 		}
 	}
-ret:
-	free(nl);
-	free(amount);
 }
 
 /* return size of matching parts */
