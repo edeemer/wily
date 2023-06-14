@@ -12,6 +12,21 @@
 #ifndef MAXPATH
 #define MAXPATH MAXPATHLEN
 #endif
+/* An item opener must satisfy the following requirements:
+ * (1) return without waiting for the destination program 
+ * (2) exit with code 0 for success, i. e. the destination program is found
+ * (3) exit with non-zero code if no matching program is found for the item
+ * Also, the opener should run fast enough, since it's executed with
+ * every button 3 click on text.
+ *
+ * "plumb" from plan9port fits these requirements. You may also
+ * check https://sr.ht/~min/regopen/.
+ *
+ * To disable this feauture, define OPENER as NULL.
+ */
+#ifndef OPENER
+#define OPENER "plumb"
+#endif
 
 enum {
 	/* memory */

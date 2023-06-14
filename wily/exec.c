@@ -82,6 +82,54 @@ run(View *v, char *cmd, char *arg) {
 	free (buf2);
 }
 
+/*
+ * Open 'item' with an item opener for view 'v'.
+ * Returns true for success, false otherwise.
+ */
+Bool
+opener(View*v, char *item) {
+	char	cmd[MAXPATH * 2 + 1];
+	Path	label;
+	Path	realitem;
+	int	fdnull;
+	int	pid;
+	int	ret;
+
+	if(OPENER == 0) {
+		assert(false);
+		return false;
+	}
+
+	if(item[0] == '~' || item[0] == '$')
+		label2path(realitem, item);
+	else
+		strncpy(realitem, item, sizeof(realitem) - 1);
+
+	ret = snprintf(cmd, sizeof(cmd), "%s %s", OPENER? OPENER: "", realitem);
+	if (ret < 0 || ret >= sizeof(cmd)) {
+		fprintf(stderr, "%s: item is too long\n", realitem);
+		return false;
+	}
+
+	data_getlabel(view_data(v), label);
+
+	switch(pid=fork()) {
+	case -1:	/* fork failed */
+		return false;
+	default:	/* parent */
+		waitpid(pid, &ret, 0);
+		return ret == 0;
+	case 0:	/* child */
+		if ((fdnull = open("/dev/null", O_RDONLY, 0)) < 0) {
+			perror("open /dev/null");
+			return false;
+		}
+		ex_child(fdnull, fdnull, label, cmd, 0);
+		assert(false);
+		return false;
+	}
+}
+
 /*********************************************************************
 	Static Functions
 *********************************************************************/

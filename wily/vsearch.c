@@ -97,6 +97,8 @@ b3(View *v, Range r) {
 		goto cleanup;
 	
 	
+	if (OPENER && opener(v, s))		/* Opener item? */
+		goto cleanup;
 	if (view_gotofile(&v, &expanded, s)) { /* Simple file? */
 		r = expanded;
 	} else if ( (found = openinclude(v,r)) ) {
