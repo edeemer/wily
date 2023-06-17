@@ -122,6 +122,7 @@ follow(View *v, ulong oldq, ulong p0, ulong p1, Bool selecting, Mouse *m)
 	fn = selecting? frselectf : frselectf2;
 	toggle(v, fn, p0, p1);
 	v->selecting = true;
+	v->sel.p1 = v->sel.p0;
 	
 	*m= emouse();
 	type = 0;
