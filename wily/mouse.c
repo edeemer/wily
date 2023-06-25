@@ -25,7 +25,12 @@ domouse(View	*v, Mouse *m) {
 			dobutton(v, m);
 	} else {
 		ulong	oldbuttons = m->buttons;
-		Range	r = vselect(v, m);
+		Range	r;
+
+		if(!(oldbuttons & WHEELUP || oldbuttons & WHEELDOWN))
+			r = vselect(v, m);
+		else
+			r.p0 = r.p1 = 0;
 
 		action(v, m, r, oldbuttons);
 	}
