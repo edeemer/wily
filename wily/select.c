@@ -8,6 +8,7 @@
 
 static void	frselectf2(Frame *f, Point p0, Point p1, Fcode c);
 static void	dclick(View *, ulong, ulong *, ulong *);
+static void	erasebar(View *, ulong, ulong);
 
 typedef 	void		(*SelFn)(Frame*, Point, Point, Fcode);
 
@@ -122,6 +123,12 @@ follow(View *v, ulong oldq, ulong p0, ulong p1, Bool selecting, Mouse *m)
 	fn = selecting? frselectf : frselectf2;
 	toggle(v, fn, p0, p1);
 	v->selecting = true;
+	/*
+	 * For subsequent redraws, draw the selection only on the top
+	 * left side. The selection will be erased later.
+	 */
+	if(selecting)
+		v->sel.p0 = v->sel.p1 = 0;
 	
 	*m= emouse();
 	type = 0;
@@ -148,6 +155,9 @@ follow(View *v, ulong oldq, ulong p0, ulong p1, Bool selecting, Mouse *m)
 			update(v, fn, p0, p1, q);
 			oldq = p1 = q;
 		}
+		/* Erase the selection bar left from the previous redraw */
+		if(selecting)
+			erasebar(v, p0, p1);
 		if((type = eread(Emouse|timer,&e))==Emouse)
 			*m= e.mouse;
 	}
@@ -262,4 +272,16 @@ dclick(View *v, ulong click, ulong *p0, ulong *p1)
 	} else {
 		lastclick = click;
 	}
+}
+
+/* Remove the selection bar from the top left side of the v->f. */
+static void
+erasebar(View *v, ulong sel0, ulong sel1) {
+	Frame *f = &v->f;
+	ulong min;
+	ulong c;
+
+	min = sel0 < sel1 ? sel0 : sel1;
+	c = (min > BASE(v)) ? Zero : ~Zero;
+	frselectf(f, frptofchar(f, 0), frptofchar(f, 0), c);
 }
