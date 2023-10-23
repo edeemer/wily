@@ -67,11 +67,12 @@ frselectf(Frame *f, Point p0, Point p1, Fcode c)
 	if(p0.y == f->r.max.y)
 		return;
 	if(n == 0){
-		if(p0.x == p1.x)
+		if(p0.x == p1.x){
 			if(p0.x == f->r.min.x)
 				q1.x++;
 			else
 				p0.x--;
+		}
 		bitblt(f->b, p0, f->b, Rpt(p0, q1), c);
 	}else{
 		if(p0.x >= f->r.max.x)

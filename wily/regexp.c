@@ -278,11 +278,12 @@ pushator(int v)
 Node *
 popand(int op)
 {
-	if(andp <= &andstack[0])
+	if(andp <= &andstack[0]){
 		if(op)
 			regerror_c(Emissop, op);
 		else
 			regerror(Ebadregexp);
+	}
 	return --andp;
 }
 
