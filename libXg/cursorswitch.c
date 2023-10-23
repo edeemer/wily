@@ -29,7 +29,7 @@ static Cursor arrow =
 };
 
 static Bitmap *bsrc, *bmask;
-static Rectangle crect = { 0, 0, 16, 16 };
+static Rectangle crect = { {0, 0}, {16, 16} };
 
 void
 cursorswitch(Cursor *c)

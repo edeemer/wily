@@ -1,4 +1,5 @@
 /* Copyright (c) 1992 AT&T - All rights reserved. */
+#include "latin1.h"
 
 struct latin
 {

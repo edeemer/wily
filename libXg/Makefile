@@ -13,3 +13,6 @@ OBJS=arc.o arith.o balloc.o bitblt.o bitbltclip.o border.o bscreenrect.o\
 	wrbitmap.o wrbitmapfile.o xtbinit.o
 include $(INCLUDES)/Makelib
 $(OBJS):	$(INCLUDES)/u.h $(INCLUDES)/libc.h $(INCLUDES)/libg.h
+
+gwin.o: keysymtab.h
+gwin.o latin1.o: latin1.h

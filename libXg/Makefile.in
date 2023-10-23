@@ -15,5 +15,4 @@ include $(INCLUDES)/Makelib
 $(OBJS):	$(INCLUDES)/u.h $(INCLUDES)/libc.h $(INCLUDES)/libg.h
 
 gwin.o:	keysymtab.h
-
-gwin.o:	keysymtab.h
+gwin.o latin1.o: latin1.h

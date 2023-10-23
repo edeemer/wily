@@ -121,7 +121,6 @@ ffree(Font *f)
 {
 	int i;
 	Cachesubf *c;
-	unsigned char *b;
 
 	for (i=0; i<f->nsubf; i++){
 		c = f->subf+i;

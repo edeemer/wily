@@ -15,6 +15,7 @@
 #endif
 
 #include "GwinP.h"
+#include "latin1.h"
 
 /* Forward declarations */
 static void Realize(Widget, XtValueMask *, XSetWindowAttributes *);
@@ -119,8 +120,6 @@ static int keypermod;
 static void
 Realize(Widget w, XtValueMask *valueMask, XSetWindowAttributes *attrs)
 {
-	XtValueMask		mask;
-
 	*valueMask |= CWBackingStore;
 	attrs->backing_store = Always;
 

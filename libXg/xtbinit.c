@@ -79,7 +79,6 @@ static int einitcalled = 0;
 static int Smouse = -1;
 static int Skeyboard = -1;
 static int Stimer = -1;
-static XtIntervalId	timerid;
 
 static Font *	initfont(char *, 	XFontStruct *, char *);
 static void	reshaped(int, int, int, int);
@@ -137,7 +136,6 @@ xtbinit(Errfunc f, char *class, int *pargc, char **argv, char **fallbacks)
 	String fixedname;
 	Arg args[10];
 	char *p;
-	XSetWindowAttributes attr;
 	int compose;
 
 	if(!class && argv[0]){
@@ -260,7 +258,6 @@ static void
 reshaped(int minx, int miny, int maxx, int maxy)
 {
 	Ebuf *eb;
-	Mouse m;
 
 	screen.r = Rect(minx, miny, maxx, maxy);
 	screen.clipr = screen.r;
@@ -581,7 +578,6 @@ scrollfwdbut(void)
 {
 	Arg arg;
 	Boolean v;
-	String s;
 
 	XtSetArg(arg, XtNscrollForwardR, &v);
 	XtGetValues(widg, &arg, 1);

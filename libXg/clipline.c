@@ -80,7 +80,6 @@ void
 gsetline(Point *pp0, Point *pp1, Linedesc *l)
 {
 	long dx, dy, t;
-	Point endpt;
 	int swapped;
 	Point p0, p1;
 
@@ -91,7 +90,7 @@ gsetline(Point *pp0, Point *pp1, Linedesc *l)
 	l->slopeneg = 0;
 	dx = p1.x - p0.x;
 	dy = p1.y - p0.y;
-	if(abs(dy) > abs(dx)){	/* Steep */
+	if(labs(dy) > labs(dx)){	/* Steep */
 		l->xmajor = 0;
 		XYswap(&p0);
 		XYswap(&p1);
@@ -133,7 +132,7 @@ gsetline(Point *pp0, Point *pp1, Linedesc *l)
  *	Newman & Sproull 124 (1st edition)
  */
 
-static
+static int
 code(Point *p, Rectangle *r)
 {
 	return( (p->x<r->min.x? 1 : p->x>=r->max.x? 2 : 0) |

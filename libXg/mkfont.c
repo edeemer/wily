@@ -10,7 +10,6 @@ Font*
 mkfont(Subfont *subfont)
 {
 	Font *font;
-	unsigned char *gbuf;
 	Cachesubf *c;
 	char *cp;
 
