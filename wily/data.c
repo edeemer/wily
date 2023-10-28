@@ -67,11 +67,11 @@ data_put(Data *d, char *label) {
 	Stat		buf;
 	Path		path;
 	Bool		statfailed, writefailed;
-	
+
 	if(!label)
 		label = d->label;
 	label2path(path, label);
-	
+
 	statfailed = -1 == stat(path, &buf);
 
 	if((fd = open(path,O_RDWR|O_CREAT|O_TRUNC, 0666))<0){
@@ -84,7 +84,7 @@ data_put(Data *d, char *label) {
 		diag(path, "write failed: \"%s\"", path);
 		return -1;
 	}
-	
+
 	if (
 		!strcmp(d->label,label)
 		|| (!statfailed && !statcmp(&buf, &d->stat))
@@ -116,7 +116,7 @@ int
 data_del(Data*d) {
 	if(data_backup(d))
 		return 1;
-	
+
 	data_senddestroy(d);
 	data_listremove(d);
 	dirnames_free(d->names);

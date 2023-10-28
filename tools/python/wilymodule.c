@@ -19,7 +19,7 @@ typedef struct {
 
 staticforward PyTypeObject Contype;
 
-static char con_list__doc__[] = 
+static char con_list__doc__[] =
 "List currently open windows
 
 list()
@@ -42,7 +42,7 @@ con_list(conobject *self, PyObject *args)
 }
 
 
-static char con_win__doc__[] = 
+static char con_win__doc__[] =
 "open a window
 
 win(name:string, isBackedUp:integer)
@@ -60,7 +60,7 @@ con_win(conobject *self, PyObject *args)
 
 	if (!PyArg_ParseTuple(args, "si", &s, &isbackedup)) {
 		return NULL;
-	}	
+	}
 	if((err = rpc_new(self->h, s, &id, (ushort)isbackedup))) {
 		PyErr_SetString(ErrorObject, err);
 		return NULL;
@@ -69,7 +69,7 @@ con_win(conobject *self, PyObject *args)
 }
 
 
-static char con_event__doc__[] = 
+static char con_event__doc__[] =
 "event()
 
 returns an event tuple (w, t, r0, r1, s), whose fields are:
@@ -102,7 +102,7 @@ con_event(conobject *self, PyObject *args)
 }
 
 
-static char con_eventwouldblock__doc__[] = 
+static char con_eventwouldblock__doc__[] =
 "eventwouldblock()
 
 If eventwouldblock() returns true, calling event() might have to wait.
@@ -118,7 +118,7 @@ con_eventwouldblock(conobject *self, PyObject *args)
 	return Py_BuildValue("b", rpc_wouldblock(self->h));
 }
 
-static char con_bounce__doc__[] = 
+static char con_bounce__doc__[] =
 "bounce(tuple)
 
 Called with an event tuple as returned by event().  Returns None"
@@ -130,7 +130,7 @@ con_bounce(conobject *self, PyObject *args)
 	Msg	m;
 	char	*err;
 
-	if (!PyArg_ParseTuple(args, "(iills)", 
+	if (!PyArg_ParseTuple(args, "(iills)",
 		&m.w, &m.t, &m.r.p0, &m.r.p1, &m.s))
 		return NULL;
 	if(rpc_bounce(self->h, &m)){
@@ -141,7 +141,7 @@ con_bounce(conobject *self, PyObject *args)
 	return Py_None;
 }
 
-static char con_attach__doc__[] = 
+static char con_attach__doc__[] =
 "attach(w:integer, mask:integer)
 
 'w' is a window identifier as obtained by new() or list().
@@ -167,7 +167,7 @@ con_attach(conobject *self, PyObject *args)
 	return Py_None;
 }
 
-static char con_setname__doc__[] = 
+static char con_setname__doc__[] =
 "setname(w:integer, s:string)
 
 Set w's name to 's'";
@@ -190,7 +190,7 @@ con_setname(conobject *self, PyObject *args)
 }
 
 
-static char con_settools__doc__[] = 
+static char con_settools__doc__[] =
 "settools(w:integer, s:string)
 
 Set w's tools to 's'
@@ -213,7 +213,7 @@ con_settools(conobject *self, PyObject *args)
 	return Py_None;
 }
 
-static char con_gettools__doc__[] = 
+static char con_gettools__doc__[] =
 "gettools(w:integer) : string
 
 Return the tools currently visible in w's tag";
@@ -234,7 +234,7 @@ con_gettools(conobject *self, PyObject *args)
 	return Py_BuildValue("s", tools);
 }
 
-static char con_getname__doc__[] = 
+static char con_getname__doc__[] =
 "getname(w:integer) : string
 
 Return the name currently visible in w's tag";
@@ -255,7 +255,7 @@ con_getname(conobject *self, PyObject *args)
 	return Py_BuildValue("s", name);
 }
 
-static char con_read__doc__[] = 
+static char con_read__doc__[] =
 "read(w:integer, from:integer, to:integer)
 
 returns a (UTF) string
@@ -292,7 +292,7 @@ con_read(conobject *self, PyObject *args)
 }
 
 
-static char con_replace__doc__[] = 
+static char con_replace__doc__[] =
 "replace(w:integer, from:integer, to:integer, s:string)
 
 replace the text in 'w' from 'from' to 'to' with 's'
@@ -320,13 +320,13 @@ con_replace(conobject *self, PyObject *args)
 		PyErr_SetString(ErrorObject, err);
 		return NULL;
 	}
-	
+
 	Py_INCREF(Py_None);
 	return Py_None;
 }
 
 
-static char con_run__doc__[] = 
+static char con_run__doc__[] =
 "run(w:integer, s:string)
 
 has the same effect as sweeping 's' with B2  in window 'w'
@@ -349,7 +349,7 @@ con_run(conobject *self, PyObject *args)
 	return Py_None;
 }
 
-static char con_goto__doc__[] = 
+static char con_goto__doc__[] =
 "goto(w:integer, from:long, to:long, s:string, flag:integer)
 
 has the same effect as sweeping 's' with B3  in window 'w',
@@ -397,7 +397,7 @@ static struct PyMethodDef con_methods[] = {
  {"replace",	con_replace,	1,	con_replace__doc__},
  {"run",	con_run,	1,	con_run__doc__},
  {"goto",	con_goto,	1,	con_goto__doc__},
- 
+
 	{NULL,		NULL}		/* sentinel */
 };
 
@@ -409,7 +409,7 @@ newconobject()
 {
 	conobject *self;
 	int	fd;
-	
+
 	self = PyObject_NEW(conobject, &Contype);
 	if (self == NULL)
 		return NULL;
@@ -425,7 +425,7 @@ newconobject()
 		PyErr_SetString(ErrorObject, "rpc_init");
 		return NULL;
 	}
-	
+
 	return self;
 }
 
@@ -447,7 +447,7 @@ con_getattr(self, name)
 	return Py_FindMethod(con_methods, (PyObject *)self, name);
 }
 
-static char Contype__doc__[] = 
+static char Contype__doc__[] =
 "Wily connection
 
 Holds the state for a connection to Wily
@@ -502,14 +502,14 @@ wily_Connection(PyObject *self, PyObject *args)
 
 static struct PyMethodDef wily_methods[] = {
 	{"Connection",	wily_Connection,	1,	wily_Connection__doc__},
- 
+
 	{NULL,		NULL}		/* sentinel */
 };
 
 
 /* Initialization function for the module (*must* be called initwily) */
 
-static char wily_module_documentation[] = 
+static char wily_module_documentation[] =
 "Open, manipulate, monitor Wily windows
 
 Everything is accessed through a Connection object.

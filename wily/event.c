@@ -15,19 +15,19 @@ typedef enum Keytype {
 	Klisten, 	/* connection requests */
 	Kout, 	/* output to stderr or a window */
 	Kmsg	/* from external connections */
-} Keytype; 
+} Keytype;
 
 /* Info about a libXg event key */
 struct Key {
 	Keytype 	t;
 	int		fd;		/* file descriptor*/
 	ulong	key;		/* libXg event key */
-	
-	/* 
+
+	/*
 	 * Buffer for incomplete messages.
 	 * Only in use if k->t == Kmsg.
 	 */
-	Mbuf	buf;		
+	Mbuf	buf;
 
 	/*
 	 * Info about the program sending us output.
@@ -100,7 +100,7 @@ int
 event_outputstart(int fd, int pid, char*cmd, char*label, View *v){
 	ulong key;
 	Key	*k;
-	
+
 	if (!(key = estart(0, fd, 0))) {
 		diag(0, "estart");
 		return -1;
@@ -129,14 +129,14 @@ event_outputstart(int fd, int pid, char*cmd, char*label, View *v){
 void
 event_wellknown(int fd){
 	ulong key;
-	
+
 	if(!(key = estart(0, fd, 0)))
 		error("estart");
 	key_new(key,fd, Klisten);
 }
 
-/* 
- * Handle 'n' bytes of data in 's' which arrived from 
+/*
+ * Handle 'n' bytes of data in 's' which arrived from
  * libXg event key 'key'.
  */
 void
@@ -168,7 +168,7 @@ kill_all(char*s) {
 	for (s = strtok(s, sep); s; s = strtok(NULL, sep)) {
 		if ((k = key_findcmd(s))) {
 			/* only output keys have a prog attached */
-			assert(k->t == Kout); 
+			assert(k->t == Kout);
 			if(kill(- k->pid, SIGKILL))
 				diag(0, "kill %s", s);
 		}
@@ -179,7 +179,7 @@ kill_all(char*s) {
 void
 kill_list(void){
 	Key	*k;
-	
+
 	errno = 0;
 	for(k = keytab; k < keytab + MAXKEYS; k++)
 		if(k->t == Kout && !k->v)
@@ -303,7 +303,7 @@ ex_accept(int n, char*s) {
 		diag(0, "failed connection attempt");
 		return;
 	}
-	
+
 	if (!(key= estart(0,fd,0))){
 		diag(0, "couldn't estart to accept connection");
 		close(fd);
@@ -315,7 +315,7 @@ ex_accept(int n, char*s) {
 
 /*
  * Find the Key info given the libXg event key.
- * 
+ *
  * ASSUMPTION: integers at least 32 bit.
  */
 static Key*
@@ -325,9 +325,9 @@ key_find(ulong key) {
 	for(k = keytab; k < keytab + MAXKEYS; k++)
 		if(k->key == key)
 			return k;
-	
+
 	/* We assume key_find will always work */
-	assert(false);	
+	assert(false);
 	return 0;
 }
 

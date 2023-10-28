@@ -38,7 +38,7 @@ main(int c, char**v){
 		e("can't open wilyfifo");
 	}
 	h = rpc_init(fd);
-	
+
 	status = true;
 	rpc_list(h, &p);
 	printf("%s", p);

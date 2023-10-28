@@ -360,9 +360,9 @@ static struct mCmd mcmds[] = {
 	{ "deliver", MCCOMPART, MARG, mDeliver },
 	{ "savefile", MCANY, MARG, mSavefile },
 	{ "save", MCANY, MARG, mSave },
-	{ "allheaders", MCANY, MARG, mAllheaders}, 
-	{ "inc", MCCOMPART, MARG, mInclude}, 
-	{ "incall", MCCOMPART, MARG, mIncludeall}, 
+	{ "allheaders", MCANY, MARG, mAllheaders},
+	{ "inc", MCCOMPART, MARG, mInclude},
+	{ "incall", MCCOMPART, MARG, mIncludeall},
 	{ "commit", MCANY, MNOARG, mCommit },
 	{ "rescan", MCANY, MNOARG, mRescan },
 	{ "next", MCANY, MNOARG, mNext },
@@ -743,7 +743,7 @@ mSave(rdWin *w, int first, int last, char *arg)
 		text = &m->whole;
 		assert(text->s1 && text->s0);
 		len = text->s1 - text->s0;
-	
+
 		if (fwrite(text->s0, (size_t)1, len, fp) != len) {
 			DPRINT("Failed to write the file");
 			perror("fwrite");

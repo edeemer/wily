@@ -102,7 +102,7 @@ String _fallbacks[] = {
 };
 
 #ifndef R3
-static char *shelltrans = 
+static char *shelltrans =
 	"<ClientMessage> WM_PROTOCOLS : WMProtocolAction()";
 static XtActionsRec wmpactions[] = {
 	{"WMProtocolAction", wmproto}
@@ -122,7 +122,7 @@ ioerr(Display *d)
 	if(onerr)
 		(*onerr)("ioerr");
 	else
-		exit(1); 
+		exit(1);
 	return 0;
 }
 
@@ -907,7 +907,7 @@ waitevent(void)
 	else
 		XtAppProcessEvent(app, XtIMAll);
 }
-		
+
 int
 snarfswap(char *s, int n, char **t)
 {

@@ -242,7 +242,7 @@ read_info(int rev)
 		fprintf(stderr,"failed to read ranges\n");
 		exit(1);
 	}
-		
+
 	DPRINT("Chosen range: %lu-%lu\n",minmax->p0, minmax->p1);
 	return;
 }
@@ -258,7 +258,7 @@ utftotext(Rune *r, char *s1, char *s2)
 {
 	Rune	*q;
 	char	*t;
-	
+
 	if (s2 <= s1)
 		return 0;
 	for (t = s1, q = r; t < s2; q++)

@@ -21,7 +21,7 @@ mycmp (const void *a, const void *d) {
 #define CHECKDIR(dp)	(0)
 #endif
 
-/* 
+/*
  * Read 'dirp', return null-terminated array of strings representing the
  * files in the directory.  Both the strings and the array need to be
  * freed later (use dirnames_free()).

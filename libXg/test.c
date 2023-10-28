@@ -227,7 +227,7 @@ m3gen(int n)
 
 	if (n < 0 || n > 2)
 		return 0;
-	else 
+	else
 		return m3[n];
 }
 

@@ -13,7 +13,7 @@ stripwhitespace(Tile *t, int excess) {
 
 	if (!t->body )
 		return 0;
-	
+
 	size = TILESIZE(t);
 
 	/* Possibly we've already mangled this tile, so it can no longer
@@ -62,7 +62,7 @@ hide(Tile *t, int excess) {
 }
 
 typedef int (*SizeAdjust)(Tile*, int);
-SizeAdjust method []  = { 
+SizeAdjust method []  = {
 	stripwhitespace, halve, shrink, hide, 0
 };
 /*****************************************************************
@@ -89,24 +89,24 @@ adjust_sizes_in_range(Tile*start, Tile*end, int available)
 
 	for(j=0; (m=method[j]); j++) {
 		FOR_EACH_VISIBLE(start,end){
-			assert(size == (now = list_size(start, end)));	
+			assert(size == (now = list_size(start, end)));
 			excess = MAX(size - available, 0);
 			saving = (*m)(t, excess);
 			assert(t->ishidden || (TILESIZE(t) >= t->base));
 			size -= saving;
-			
+
 			/* check our math */
-			assert(size == (now = list_size(start, end)));	
+			assert(size == (now = list_size(start, end)));
 
 			if (size <= available) {
 				/* C doesn't have labelled break.  So sue me. */
-				goto out;	
+				goto out;
 			}
 		}
 	}
 out:
 	/* check our math */
-	assert(size == (now = list_size(start, end)));	
+	assert(size == (now = list_size(start, end)));
 
 	assert (size <= available);	/* Even if we had to hide everything */
 

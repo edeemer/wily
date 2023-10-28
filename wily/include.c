@@ -21,18 +21,18 @@ openinclude(View *v, Range r) {
 	int		len;
 	Text		*t;
 	char		*s;
-	
+
 	t = view_text(v);
-	
+
 	expanded = text_expand(t, r, notinclude);
 	len = RLEN(expanded);
 	if( len > (MAXPATH*UTFmax) || len < 2)
 		return false;
 	len = text_copyutf(t, expanded, buf);
-	
+
 	if (!is_includebrackets(buf[0], buf[len-1]))
 		return false;
-	
+
 	buf[len-1] = 0;
 	s = pathfind(getenv("INCLUDES"),  buf+1);
 	if(!s) {

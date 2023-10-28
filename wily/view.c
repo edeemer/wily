@@ -34,7 +34,7 @@ view_expand(View *v, Range r, char *s) {
 }
 
 /*****************************************
- 	Allocate, deallocate, invariants 
+	Allocate, deallocate, invariants
  *****************************************/
 
 /* Allocate and return a new View.  Doesn't attempt to draw it. */
@@ -98,7 +98,7 @@ view_invariants(View*v)
 	/* We're either displaying at least one line, or we're quite hidden */
 	assert(RLEN(v->visible)==v->f.nchars);
 	assert(v->f.nchars <= length);
-	
+
 	/* View height == integral number of lines
 	assert(Dy(v->r) == 2*INSET + v->f.maxlines * v->f.font->height);
 	 */
@@ -185,13 +185,13 @@ view_append(View *v, char *s, int n) {
 	Text	*t;
 	ulong	len;
 	Range	end;
-	
+
 	t = v->t;
 	len = text_length(t);
 	end = range(len,len);
 	n = stripnulls(s, n);
 	s[n] = 0;
-	
+
 	text_replaceutf(v->t, end, s);
 }
 
@@ -240,11 +240,11 @@ void
 view_border(View *v, Bool set)
 {
 	Rectangle r;
-	
+
 	assert(v);
 	r = v->r;
 	r.min.x += SCROLLWIDTH + 4;
-	
+
 	if (tile_hidden(view_tile(v)))
 		return;
 	if (set)
@@ -298,7 +298,7 @@ view_warp (View *v, Range r)
 	assert(RINTERSECT(r, v->visible));
 	assert(r.p1 <= text_length(v->t));
 	assert(ISVISIBLE(v));
-	
+
 	pt = frptofchar(&v->f, r.p0 - v->visible.p0);
 	pt.x += 3;
 	pt.y += v->f.font->height/2;	/* middle of char */
@@ -325,13 +325,13 @@ view_replace(View *v, Range r, Rstring s)
 	assert(RLEN(r) || RSLEN(s));	/* or we wouldn't get here */
 	assert(r.p0 <= text_length(v->t));	/* even if we're deleting text, this will hold */
 
-	if(visible && q.p1 >= q.p0) {	
+	if(visible && q.p1 >= q.p0) {
 		/* some of the replaced text is visible */
 		Frame		*f = &v->f;
 
 		q.p0 -= v->visible.p0;
 		q.p1 -= v->visible.p0;
-		
+
 		if(RLEN(q))
 			frdelete(f, q.p0 , q.p1);
 		if(RSLEN(s))

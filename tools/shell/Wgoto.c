@@ -20,25 +20,25 @@ main(int argc, char**argv) {
 	char		*errstr;
 	ushort	selectit;
 	Range	rangefound;
-	
+
 	if( argc != 3 ) {
 		ehandle("usage: Wexec path id");
 	}
-	
+
 	path = argv[1];
 	idstr = argv[2];
 	id = atoi(idstr);
-		
+
 	/* Obtain file descriptor */
 	fd = client_connect();
 	if (fd<0) {
 		ehandle("client_connect");
 	}
-	
+
 	/* Obtain handle */
 	handle = rpc_init(fd);
 	assert(handle != 0);
-	
+
 	/* send the command */
 
 	selectit = 1;

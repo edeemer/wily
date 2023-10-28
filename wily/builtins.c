@@ -43,7 +43,7 @@ builtin_font(View *v, char *arg) {
 static void
 builtin_autoindent(View *v, char *arg) {
 	View *body;
-	
+
 	if ((body = view_body(v))) {
 		body->autoindent = ! body->autoindent;
 	} else {
@@ -53,7 +53,7 @@ builtin_autoindent(View *v, char *arg) {
 
 /*****************************************************
 	Undo, redo.  If called with an argument, they
-	each go 'all the way'. 
+	each go 'all the way'.
 *****************************************************/
 static void
 undo_ops(View *v, char*arg, Range (*undofn)(Text*, Bool))
@@ -113,7 +113,7 @@ quit(View *v, char *arg) {
 }
 
 /*****************************************************
-	Del, Delcol delete the window or column 
+	Del, Delcol delete the window or column
 	'v' belongs to.
 *****************************************************/
 static void
@@ -179,7 +179,7 @@ static void
 clear(View *v, char *arg) {
 	View	*body;
 
-	if ((body = view_body(v))) 
+	if ((body = view_body(v)))
 		text_replace(body->t, text_all(body->t), rstring(0,0));
 }
 
@@ -202,7 +202,7 @@ new(View *v, char *arg) {
 
 	if(!arg)
 		arg = "New";
-		
+
 	/* If 'v' isn't part of a window, maybe last_selection is */
 	if(!view_win(v))
 		v = last_selection;
@@ -262,10 +262,10 @@ builtin(View *v, char *cmd, char *arg)
 
 	key.name = cmd;
 	c = bsearch( &key, builtins, sizeof(builtins)/sizeof(Cmd),
-				 sizeof(Cmd), 
+				 sizeof(Cmd),
 			(int	(*)(const void *,const void*))cmd_compare);
 
-	if (c) 
+	if (c)
 		(*c->cmd)(v, arg);
 	return (Bool) c;
 }

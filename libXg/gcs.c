@@ -278,7 +278,7 @@ _getfillgc(Fcode f, Bitmap *b, unsigned long val)
 				case F&S:	goto labF;
 				}
 			}
-			
+
 		}
 	}
 	gcv.foreground = spix;
@@ -392,7 +392,7 @@ _getcopygc(Fcode f, Bitmap *db, Bitmap *sb, int *bltfunc)
 		}
 		gcv.function = xf;
 		gcvm |= GCFunction;
-	
+
 #undef code
 	}
 

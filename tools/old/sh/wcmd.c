@@ -23,7 +23,7 @@ main(int argc, char **argv)
 		perror("putenv");
 		exit(1);
 	}
-	
+
 	/* start up the other program */
 	argv++;
 	execvp(argv[0],argv);

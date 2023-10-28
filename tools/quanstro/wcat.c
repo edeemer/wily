@@ -113,7 +113,7 @@ main(int c, char**v){
 		e("can't open wilyfifo");
 	}
 	h = rpc_init(fd);
-	
+
 	status = true;
 	taetig = false;
 	title = 0;

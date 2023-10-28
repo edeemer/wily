@@ -1,4 +1,4 @@
-/* see ../Doc/C.html 
+/* see ../Doc/C.html
  */
 
 typedef struct Msg Msg;
@@ -40,7 +40,7 @@ typedef enum Mtype {
 	WMexec,	 WRexec,
 	WMgoto,	 WRgoto,
 
-	WMfencepost	
+	WMfencepost
 } Mtype;
 
 struct Range {
@@ -55,8 +55,8 @@ struct Range {
 
 struct Msg {
 	Mtype	t;
-	Id		m;		/* message */	
-	Id		w;		/* window */	
+	Id		m;		/* message */
+	Id		w;		/* window */
 	Range	r;
 	ushort	flag;
 	char	*	s;

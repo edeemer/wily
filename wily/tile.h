@@ -12,7 +12,7 @@ struct Tile {
 	int	base;		/* Minimum size of tile.  */
 	Ori	ori;			/* orientation of _our_ min and max */
 	Bool	ishidden;		/* is this tile currently hidden? */
-	
+
 	Tile	*up, *down;	/* parent, child */
 	Tile	*left, *right;	/* siblings */
 	int	cmin, cmax;	/* start and end locations of children */

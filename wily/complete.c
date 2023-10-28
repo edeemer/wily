@@ -42,7 +42,7 @@ completename(View*v) {
 		n = snprintf(path, sizeof path, "%s%s", cwd, name);
 		if(n < 0)
 			goto ret;
-	} 
+	}
 	cdirname(path, dir);
 	cbasename(path, file);
 	complete(dir, file, res);

@@ -25,7 +25,7 @@ scroll_init(void) {
 	for (x = 0; x < dx; x += 2)
 		for (y = (x % 4) / 2; y < dy; y += 2)
 			point(dkgrey_o, Pt(x, y), 0, Zero);
-			
+
 	dkgrey_e = balloc(Rect(0, 0, dx, dy), 0);
 	bitblt(dkgrey_e, dkgrey_e->r.min, dkgrey_e, dkgrey_e->r, F);
 	for (x = 1; x < dx; x += 2)
@@ -64,7 +64,7 @@ scroll_set(Scroll *s, ulong thumb, ulong extent, ulong max) {
 	above = below = s->r;
 	above.max.y = oldr.min.y;
 	below.min.y = oldr.max.y;
-	
+
 	newr = getthumb(s, extent, max, thumb);
 
 	/* Sections that before were NOT in the thumb, but now are */
@@ -101,7 +101,7 @@ scroll_set(Scroll *s, ulong thumb, ulong extent, ulong max) {
 
 static ulong
 div_down(unsigned long long p, unsigned long long q) {
-	return p / q;	
+	return p / q;
 }
 
 static ulong
@@ -117,7 +117,7 @@ getthumb(Scroll *s, ulong extent, ulong max, ulong thumb)
 
 	r = inset(s->r, 1);
 	assert (Dx(s->r)<= SCROLLWIDTH);
-	
+
 	length = Dy(r);
 	if (extent < max) {
 		r.min.y = r.min.y + div_down(length * thumb, max);
@@ -126,7 +126,7 @@ getthumb(Scroll *s, ulong extent, ulong max, ulong thumb)
 		} else
 			r.min.y = r.max.y;
 	}
-	
+
 	return r;
 }
 

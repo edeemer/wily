@@ -4,7 +4,7 @@
 
 #include "wily.h"
 #include "tile.h"
- 
+
 static int	ncolumns = 2;
 int	tagheight;
 Tile	*wily=0;			/* encloses the whole application */
@@ -34,14 +34,14 @@ rmrunning(char *cmd){
 
 /* Initialize info about what bits of text get added to various tags.
  * Reads $WILYTOOLS or $HOME/.wilytools for regexp/tool pairs,
- * uses $WMAINTAG, $WCOLTAG $WFILETAG, $WDIRTAG 
+ * uses $WMAINTAG, $WCOLTAG $WFILETAG, $WDIRTAG
  * as the tools for the wily tag, column tag, file tags and directory tags
  * respectively.
  */
 static void
 tools_init(void){
 	char*s, t[200];
-	
+
 	if ((s = getenv("WILYTOOLS")))
 		tag_init(s);
 	else {
@@ -49,7 +49,7 @@ tools_init(void){
 		sprintf(p, "%s/%s", getenv("HOME"), ".wilytools");
 		tag_init(p);
 	}
-	
+
 	if ((s=getenv("WCOLTAG")))
 		columntools = strdup(s);
 	if ((s=getenv("WMAINTAG"))) {
@@ -101,14 +101,14 @@ args(int argc,char **argv, char **envp)
 	if (optind<argc) {
 		for ( ; optind < argc; optind++) {
 			Path	label;
-			
+
 			data_addcontext(0, label, argv[optind]);
 			data_open(label, true);
 		}
 	} else if (cmd == 0) {
 		data_open(wilydir, false);
 	}
-	
+
 	if (cmd != 0)
 		run(wily->tag, cmd, 0);
 }
@@ -119,7 +119,7 @@ wily_init(void)
 {
 	Text	*t;
 	int	j;
-	
+
 	t = text_alloc(0, false);
 	text_replaceutf(t, nr, wilytools);
 	wily = tile_new(V, 0, screen.r.max.y, 0, 0, t, 0);
@@ -165,7 +165,7 @@ mainloop(void)
 			lastp = e.mouse.xy;
 			mouseaction=true;
 			if(e.mouse.buttons && (last_focus = point2view(e.mouse.xy)))
-				domouse(last_focus, &e.mouse);	
+				domouse(last_focus, &e.mouse);
 			break;
 
 		default:

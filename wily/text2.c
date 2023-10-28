@@ -99,7 +99,7 @@ text_rmview(Text*t, View *v) {
 
 	if(!t->v) { /* we've deleted the last view */
 		text_free(t);
-		free(t);     
+		free(t);
 	}
 	return 0;
 }
@@ -128,7 +128,7 @@ text_write(Text *t, char *fname) {
 
 /*Return a file descriptor open for reading from a temporary
  * file which has a copy of the current selection.
- * 
+ *
  * The input for the child comes from the current selection.
  * Put the selection into a text file and attach that text
  * file to the command's fdin.
@@ -222,11 +222,11 @@ text_autoindent(Text *t, ulong p)
  * such that the character at 'p' will be offset by
  * 'height', when displayed
  * in a window of width 'w', with Font 'f'
- */ 
+ */
 int
 back_height(Text *t, ulong p, Font *f, int width, int height) {
 	int	c, hpos;
-	
+
 	if (p > 0) --p;
 	for( hpos = 0; p>0 && height>0; p--) {
 		Tgetcset(t,p);
@@ -247,7 +247,7 @@ back_height(Text *t, ulong p, Font *f, int width, int height) {
 Range
 text_all(Text*t){
 	Range r;
-	
+
 	r.p0 = 0;
 	r.p1 = t->length;
 	return r;
@@ -336,10 +336,10 @@ static void
 text_getdir(Text *t, char**names) {
 	Frame	*f;
 	char	*s;
-	
+
 	f = &t->v->f;
 	s = columnate(Dx(f->r), f->maxtab, f->font, names);
-	
+
 	undo_reset(t);
 	text_replaceutf(t, range(0, t->length), s);
 	undo_start(t);

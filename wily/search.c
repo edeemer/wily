@@ -26,10 +26,10 @@ text_look(Text*t, Range *r, Range dot) {
 	assert(!text_badrange(t,dot));
 
 	len = RLEN(dot);
-	/* don't try to search for HUGE dot */	
+	/* don't try to search for HUGE dot */
 	if( len > MAXPATH)
 		return false;
-	
+
 	text_copy(t, dot, buf);
 	return text_findliteral(t, r, rstring(buf, buf + len));
 }
@@ -194,7 +194,7 @@ static Rstring
 literal(Rstring s) {
 	Rstring	s2;
 	Rune	*r;
-	
+
 	/* quote any special characters in 's' */
 	s2.r0 = s2.r1 = (Rune*)salloc(RSLEN(s)*2*sizeof(Rune));
 	for (r = s.r0; r < s.r1; r++){
@@ -210,7 +210,7 @@ word(Rstring s) {
 	Rstring	s2;
 	Rune	*r;
 	int	nrunes;
-	
+
 	nrunes = RSLEN(s)*2 +strlen(startword) + strlen(endword);
 	s2.r0 = s2.r1 = (Rune*)salloc(nrunes*sizeof(Rune));
 

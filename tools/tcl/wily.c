@@ -26,7 +26,7 @@ static Handle	*h ;
  */
 static Bool	haveevent = false ;
 static Msg	m ;
-	
+
 static Bool
 iscon(
 	void
@@ -58,7 +58,7 @@ chk(
 )
 {
 	int	n ;
-	
+
 	if(argc != argswanted) {
 		Tcl_SetResult(interp, usage, TCL_STATIC) ;
 		return TCL_ERROR ;
@@ -87,7 +87,7 @@ wrpc_init(
 )
 {
 	int		fd ;
-	
+
 	if(argc != 1) {
 		Tcl_SetResult(interp, "init requires no arguments", TCL_STATIC) ;
 		return TCL_ERROR ;
@@ -109,7 +109,7 @@ wrpc_init(
 static int
 wrpc_isconnected(
 	Tcl_Interp	*interp,
-	int			argc, 
+	int			argc,
 	char		**argv
 )
 {
@@ -139,7 +139,7 @@ wrpc_list(
 
 	if(chk(interp, argc, argv, 1, "list requires no arguments", 0) != TCL_OK)
 		return TCL_ERROR ;
-		
+
 	emsg = rpc_list(h, &p) ;
 	if(emsg != 0) {
 		Tcl_SetResult(interp, emsg, TCL_VOLATILE) ;
@@ -173,7 +173,7 @@ wrpc_name(
 
 	if(chk(interp, argc, argv, 2, "name requires id", 0) != TCL_OK)
 		return TCL_ERROR ;
-		
+
 	emsg = rpc_list(h, &p) ;
 	if(emsg != 0) {
 		Tcl_SetResult(interp, emsg, TCL_VOLATILE) ;
@@ -194,7 +194,7 @@ wrpc_name(
 		}
 		t = strtok(0, "\n") ;
 	}
-	
+
 	Tcl_SetResult(interp, "id not found", TCL_STATIC) ;
 	free(p) ;
 	return TCL_ERROR ;
@@ -209,10 +209,10 @@ wrpc_new(
 {
 	char	*emsg ;
 	Id		id ;
-	
+
 	if(chk(interp, argc, argv, 2, "new needs filename", 0) != TCL_OK)
 		return TCL_ERROR ;
-	
+
 	emsg = rpc_new(h, argv[1], &id) ;
 	if(emsg != 0) {
 		Tcl_SetResult(interp, emsg, TCL_VOLATILE) ;
@@ -231,7 +231,7 @@ wrpc_attach(
 {
 	Id		id ;
 	char	*emsg ;
-	
+
 	if(chk(interp, argc, argv, 2, "attach needs id", &id) != TCL_OK)
 		return TCL_ERROR ;
 
@@ -256,7 +256,7 @@ wrpc_setname(
 
 	if(chk(interp, argc, argv, 3, "setname needs id and new name", &id) != TCL_OK)
 		return TCL_ERROR ;
-		
+
 	emsg = rpc_setname(h, id, argv[2]) ;
 	if(emsg != 0) {
 		Tcl_SetResult(interp, emsg, TCL_VOLATILE) ;
@@ -274,7 +274,7 @@ wrpc_settools(
 {
 	Id		id ;
 	char	*emsg ;
-		
+
 	if(chk(interp, argc, argv, 3, "settools needs id and new text", &id) != TCL_OK)
 		return TCL_ERROR ;
 
@@ -298,7 +298,7 @@ wrpc_read(
 	Range	r ;
 	char	*p ;
 	int		n ;
-	
+
 	if(chk(interp, argc, argv, 4, "read needs id, begin and end", &id) != TCL_OK)
 		return TCL_ERROR ;
 
@@ -315,14 +315,14 @@ wrpc_read(
 		Tcl_SetResult(interp, "malloc fails", TCL_STATIC) ;
 		return TCL_ERROR ;
 	}
-	
-	emsg = rpc_read(h, id, r, p) ;	
+
+	emsg = rpc_read(h, id, r, p) ;
 	if(emsg != 0) {
 		free(p) ;
 		Tcl_SetResult(interp, emsg, TCL_VOLATILE) ;
 		return TCL_ERROR ;
 	}
-	
+
 	/*
 	 *	let tcl reclaim the string
 	 */
@@ -341,7 +341,7 @@ wrpc_replace(
 	char	*emsg ;
 	Range	r ;
 	int		n ;
-		
+
 	if(chk(interp, argc, argv, 5, "replace needs id, begin, end and new text", &id) != TCL_OK)
 		return TCL_ERROR ;
 
@@ -354,7 +354,7 @@ wrpc_replace(
 		return TCL_ERROR ;
 	}
 
-	emsg = rpc_replace(h, id, r, argv[4]) ;	
+	emsg = rpc_replace(h, id, r, argv[4]) ;
 	if(emsg != 0) {
 		Tcl_SetResult(interp, emsg, TCL_VOLATILE) ;
 		return TCL_ERROR ;
@@ -371,7 +371,7 @@ wrpc_exec(
 {
 	Id		id ;
 	char	*emsg ;
-	
+
 	if(chk(interp, argc, argv, 3, "exec needs id and command", &id) != TCL_OK)
 		return TCL_ERROR ;
 
@@ -400,13 +400,13 @@ wrpc_goto(
 
 	if(Tcl_GetBoolean(interp, argv[3], &b) != TCL_OK)
 		b = 0 ;
-	
+
 	emsg = rpc_goto(h, &id, &r, argv[2], b != 0 ? true : false) ;
 	if(emsg != 0) {
 		Tcl_SetResult(interp, emsg, TCL_VOLATILE) ;
 		return TCL_ERROR ;
 	}
-	
+
 	sprintf(interp->result, "%ld %ld %ld", (long)id, (long)r.p0, (long)r.p1) ;
 	return TCL_OK ;
 }
@@ -430,7 +430,7 @@ wrpc_length(
 		Tcl_SetResult(interp, emsg, TCL_VOLATILE) ;
 		return TCL_ERROR ;
 	}
-	
+
 	sprintf(interp->result, "%ld", (long)r.p0) ;
 	return TCL_OK ;
 }
@@ -458,13 +458,13 @@ wrpc_event(
 {
 	if(chk(interp, argc, argv, 1, "event needs no args", 0) != TCL_OK)
 		return TCL_ERROR ;
-		
+
 	if(rpc_event(h, &m) == -1) {
 		Tcl_SetResult(interp, "event fails", TCL_STATIC) ;
 		return TCL_ERROR ;
 	}
 	haveevent = true ;
-	
+
 	switch(m.t) {
 	case WEexec:
 		sprintf(interp->result, "WMexec\t%ld\t%s", (long)m.w, m.s) ;
@@ -494,7 +494,7 @@ wrpc_bounce(
 {
 	if(chk(interp, argc, argv, 1, "bounce needs no args", 0) != TCL_OK)
 		return TCL_ERROR ;
-		
+
 	if(haveevent != true) {
 		Tcl_SetResult(interp, "nothing to bounce", TCL_STATIC) ;
 		return TCL_ERROR ;
@@ -535,14 +535,14 @@ Wily(
 )
 {
 	WCmd	*p ;
-	
+
 	if(argc > 1)
 		for(p = cmds ; p < cmds + sizeof cmds / sizeof cmds[0] ; p++)
 			if(strcmp(argv[1], p->name) == 0)
 				return (*p->proc)(interp, argc - 1, argv + 1) ;
 
 	Tcl_AppendResult(interp, "usage: ", argv[0], ": ", (char*)0) ;
-	
+
 	for(p = cmds ; p < cmds + sizeof cmds / sizeof cmds[0] ; p++)
 		Tcl_AppendResult(interp, "[", p->name, "] ", (char*)0) ;
 

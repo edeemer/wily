@@ -13,7 +13,7 @@
 #define MAXPATH MAXPATHLEN
 #endif
 /* An item opener must satisfy the following requirements:
- * (1) return without waiting for the destination program 
+ * (1) return without waiting for the destination program
  * (2) exit with code 0 for success, i. e. the destination program is found
  * (3) exit with non-zero code if no matching program is found for the item
  * Also, the opener should run fast enough, since it's executed with
@@ -33,7 +33,7 @@ enum {
 	GAPSIZE = 512,			/* buffer gap */
 	BUFFERSIZE = 10240,		/* when copying a whole file */
 	FILLCHUNK = 512,			/* when filling a View */
-	
+
 	/* geometry */
 	SCROLLWIDTH = 13,
 	MINWIDTH = 50,			/* ... of a window or column */
@@ -46,7 +46,7 @@ enum {
 
 	/* keys */
 	Backspace =	0x7f,
-	PageDown = 	0x80,		
+	PageDown = 	0x80,
 	PageUp = 	0x81,
 	LeftArrow =	0x82,
 	RightArrow =	0x83,

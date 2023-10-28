@@ -21,7 +21,7 @@ setcminmax(Tile *list, int*cmin, int*cmax) {
 Rectangle
 rectangle(Tile*t) {
 	if(t->ori==H) {
-		return Rect(t->min, t->up->tag->r.max.y, 
+		return Rect(t->min, t->up->tag->r.max.y,
 				t->max, t->up->max);
 	} else if (t->up) {
 		return Rect(t->up->min, t->min, t->up->max, t->max);

@@ -33,9 +33,9 @@ tile_win(Tile*tile) {
 void
 win_clone(Tile *win) {
 	Text *tag, *body;
-	
+
 	assert(ISWIN(win));
-	
+
 	tag = view_text(win->tag);
 	body = view_text(win->body);
 	win_place(win->up, tag, body);
@@ -45,8 +45,8 @@ win_clone(Tile *win) {
 void
 win_new(char*path, Text*tag, Text*body) {
 	Tile * col;
-	
-	col = findcol(path);	
+
+	col = findcol(path);
 	win_place(col, tag, body);
 }
 

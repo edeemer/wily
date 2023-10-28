@@ -56,7 +56,7 @@ main(int argc, char **argv)
 		exit(1);
 	}
 	address = argv[optind];
-	
+
 	/* open connection */
 	wilyfd = client_connect();
 	if (wilyfd < 0) {
@@ -75,7 +75,7 @@ main(int argc, char **argv)
 		error("unable to find %s", address);
 		exit(1);
 	}
-	
+
 	exit(0);
 }
 

@@ -26,14 +26,14 @@ match(char *regex, char *s) {
 	static Text *t=0;
 	Range r;
 	Bool	retval;
-	
+
 	if(!t)
 		t  = text_alloc(0, false);
 	r = nr;
 	text_replaceutf(t, text_all(t), s);
 	text_replaceutf(t, range(text_length(t),text_length(t)), "\n");
 	retval =  text_utfregexp(t, regex, &r, true);
-	
+
 	return retval;
 }
 
@@ -41,7 +41,7 @@ static void
 addpair(char *regex, char* tools) {
 	Pair p;
 	char	*nl;
-	
+
 	p.regex = regex;
 	p.tools = tools;
 	if ((nl = strchr(p.tools, '\n'))) {
@@ -58,7 +58,7 @@ char*
 tag_match(char*label) {
 	int	j;
 	static Bool inprogress;
-	
+
 	if(inprogress) {
 		j= npairs;
 	} else {
@@ -81,12 +81,12 @@ readfile(char*filename) {
 	int	fd;
 	off_t	size;
 	int	nread;
-	
+
 	fd = open(filename, O_RDONLY);
 	if( (fd<0) || fstat(fd, &statbuf)) {
 		return 0;
 	}
-	
+
 	size = statbuf.st_size;
 	buf = salloc (size+10);
 	while(size>0) {
@@ -111,10 +111,10 @@ readfile(char*filename) {
 void
 tag_init(char *filename) {
 	char	*buf, *ptr, *tab;
-	
+
 	if(!(buf=readfile(filename)))
 		return;
-	
+
 	for(ptr = strtok(buf, "\n"); ptr; ptr = strtok(0, "\n")) {
 		/* comment or blank line */
 		if (ptr[0] == '#' || isspace(ptr[0]))

@@ -276,7 +276,7 @@ nSave(rdWin *w, nGroup *g, int first, int last, char *arg)
 	for (n = first; n <= last; n++) {
 		a = g->artptrs[n];
 		assert(a);
-	
+
 		(void)fprintf(fp,"%s\n", a->body);
 		printf("Written message %d to %s\n", n+1, savefile);	/* count from 1 */
 	}

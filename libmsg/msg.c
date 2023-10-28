@@ -11,7 +11,7 @@
 
 /* NOTE: msg_flatten and msg_init need to remain in sync.
  * Preferably the msg_flatten and msg_init functions of different
- * versions should still be able to talk to one another, i.e. the 
+ * versions should still be able to talk to one another, i.e. the
  * message protocol on the wire should stay the same.
 
 	off	bytes	value
@@ -111,7 +111,7 @@ msg_init (Msg*m, uchar*buf)
 		printf("initialized ");
 		msg_print(m);
 	}
-	
+
 	return 0;
 }
 

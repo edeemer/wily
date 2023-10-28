@@ -288,10 +288,10 @@ static struct mCmd mcmds[] = {
 	{ "deliver", MCCOMPART, MARG, mDeliver },
 	{ "savefile", MCANY, MARG, mSavefile },
 	{ "save", MCANY, MARG, mSave },
-	{ "multiart", MCANY, MARG, mMultiart}, 
-	{ "allheaders", MCANY, MARG, mAllheaders}, 
-	{ "inc", MCCOMPART, MARG, mInclude}, 
-	{ "incall", MCCOMPART, MARG, mIncludeall}, 
+	{ "multiart", MCANY, MARG, mMultiart},
+	{ "allheaders", MCANY, MARG, mAllheaders},
+	{ "inc", MCCOMPART, MARG, mInclude},
+	{ "incall", MCCOMPART, MARG, mIncludeall},
 	{ "commit", MCANY, MNOARG, mCommit },
 	{ "rescan", MCANY, MNOARG, mRescan },
 	{ 0, 0, 0 }
@@ -561,7 +561,7 @@ mSave(rdWin *w, int first, int last, char *arg)
 		m = mw->mbox->msgs[n];
 		text = &m->whole;
 		len = text->s1 - text->s0;
-	
+
 		if (fwrite(text->s0, (size_t)1, len, fp) != len)
 			perror("fwrite");
 		fputc('\n',fp);

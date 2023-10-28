@@ -145,15 +145,15 @@ ex_run(View*v, char *cmd) {
 	int		perr[2];		/* pipe for stderr */
 	Path		label;
 	int		pid;
-	
+
 	if(pipe_views(&cmd, &vout, &vin))
 		return -1;
-	
+
 	if(openpipes(pout, perr, vout!=0))
 		return -1;
 
 	data_getlabel(view_data(v), label);
-	
+
 	switch(pid=fork()) {
 	case -1:	/* fork failed */
 		close(perr[0]); close(perr[1]);
@@ -167,7 +167,7 @@ ex_run(View*v, char *cmd) {
 		close(perr[0]);
 		close(pout[0]);
 		ex_child(perr[1], pout[1], label, cmd, vin);
-		
+
 		/* ex_child doesn't return */
 		assert(false);
 		exit(1);
@@ -176,7 +176,7 @@ ex_run(View*v, char *cmd) {
 }
 
 /*
- * Update 'cmd', 'vout' and 'vin' 
+ * Update 'cmd', 'vout' and 'vin'
  * appropriately depending on whether 'cmd' is a piping command,
  * i.e. starts with | < or >.
  * Return 0 for success.
@@ -185,14 +185,14 @@ static int
 pipe_views(char**cmd, View**vout, View**vin) {
 	char	op;
 	View*vpipe;
-	
+
 	op = **cmd;
 	*vout = 0;
 	*vin = 0;
 	if(!( op == '|' || op == '<' || op == '>')){
 		return 0;
 	}
-	
+
 	/* Pipe operations are on the body of the last selection */
 	if(!(vpipe = view_body(last_selection)))
 		return -1;
@@ -216,7 +216,7 @@ pipe_views(char**cmd, View**vout, View**vin) {
 /* Open pipes for stdout and stderr.
  * If and only if this is a '|' or '>' operation, stdout
  * will be distinct from stderr.
- * 
+ *
  * Return 0 for success.
  *
  * If we don't succeed, make sure
@@ -242,7 +242,7 @@ openpipes(int*out, int *err, Bool is_pipe_operation){
 	}
 	return 0;
 }
-	
+
 /*
  * Parent-side accounting for a recently started external process.
  *
@@ -282,9 +282,9 @@ static void
 ex_child(int fderr, int fdout, char *label, char *cmd, View *vin) {
 	Path	dir;
 	Path	path;
-	
+
 	childfds(fderr, fdout, vin);
-	
+
 	/* become process group leader */
 	if(setsid()<0)
 		perror("setsid");
@@ -292,13 +292,13 @@ ex_child(int fderr, int fdout, char *label, char *cmd, View *vin) {
 	label2path(path, label);
 	strcpy(dir,path);
 	dirnametrunc(dir);
-	
+
 	/* Executing the command without being in the right directory
 	 * would be _bad_.
 	 */
 	if(chdir(dir)){
 		Path	buf;
-		
+
 		sprintf(buf, "chdir(%s)", dir);
 		perror(buf);
 		exit(1);
@@ -337,7 +337,7 @@ childenv(char *label,char*path) {
  *
  * Replace 'stderr' and 'stdout' with 'fderr' and 'fdout'.
  *
- * If 'vin' is not null, replace 'stdin' with a file descriptor 
+ * If 'vin' is not null, replace 'stdin' with a file descriptor
  * that will give the contents of the selection in 'vin',
  * otherwise, 'stdin' is set to '/dev/null'.
  */
@@ -354,7 +354,7 @@ childfds(int fderr, int fdout, View *vin) {
 
 	if (vin) {
 		/* fd open to read current selection */
-		fdin = text_fd(view_text(vin), view_getsel(vin));		
+		fdin = text_fd(view_text(vin), view_getsel(vin));
 		if(fdin<0)
 			exit(1);
 	} else if ((fdin = open("/dev/null", O_RDONLY, 0)) < 0) {
@@ -395,15 +395,15 @@ reap(void) {
 static void
 signal_init(void) {
 	/* in case external process exits */
-	signal(SIGPIPE, SIG_IGN);       
+	signal(SIGPIPE, SIG_IGN);
 
-	signal(SIGHUP, cleanup_and_die); 
-	signal(SIGINT, cleanup_and_die); 
-	signal(SIGTERM, cleanup_and_die); 
-	
-	signal(SIGSEGV, cleanup_and_abort); 
+	signal(SIGHUP, cleanup_and_die);
+	signal(SIGINT, cleanup_and_die);
+	signal(SIGTERM, cleanup_and_die);
+
+	signal(SIGSEGV, cleanup_and_abort);
 	/* signal(SIGSYS, cleanup_and_abort);  */
-	signal(SIGILL, cleanup_and_abort); 
+	signal(SIGILL, cleanup_and_abort);
 }
 
 /* Start listening to fifo in well-known location */

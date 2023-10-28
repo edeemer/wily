@@ -108,7 +108,7 @@ salloc(int size)
 
 	assert(size>=0);
 	/* make sure we'll have something to free */
-	size = size? size : sizeof(int);	
+	size = size? size : sizeof(int);
 	p = malloc(size);
 	if (!p)
 		abort();	/* todo */

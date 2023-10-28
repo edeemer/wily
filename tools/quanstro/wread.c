@@ -86,7 +86,7 @@ main(int c, char**v){
 		exits("can't open wilyfifo");
 	}
 	h = rpc_init(fd);
-	
+
 	s=rpc_goto(h, (Id*)&id, &R, (char*)":$", false);
 	if (s){
 		exits(s);

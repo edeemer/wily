@@ -119,7 +119,7 @@ follow(View *v, ulong oldq, ulong p0, ulong p1, Bool selecting, Mouse *m)
 	Event	e;
 	ulong	type, timer=0;
 	SelFn 	fn;
-	
+
 	fn = selecting? frselectf : frselectf2;
 	toggle(v, fn, p0, p1);
 	v->selecting = true;
@@ -129,14 +129,14 @@ follow(View *v, ulong oldq, ulong p0, ulong p1, Bool selecting, Mouse *m)
 	 */
 	if(selecting)
 		v->sel.p0 = v->sel.p1 = 0;
-	
+
 	*m= emouse();
 	type = 0;
 	while(m->buttons == buttons){
 		q = frcharofpt(f, m->xy) +v->visible.p0;
 
 		/* We only autoscroll while affecting the selection, not for b2 or b3 */
-		if (selecting) {	
+		if (selecting) {
 			/* We want the timer going iff we're outside the rectangle */
 			if (ptinrect(m->xy, f->r)) {
 				if (timer){
@@ -163,7 +163,7 @@ follow(View *v, ulong oldq, ulong p0, ulong p1, Bool selecting, Mouse *m)
 	}
 	v->selecting = false;
 	if(timer)
-		estoptimer(timer);	
+		estoptimer(timer);
 
 	return maybereverserange(p0,p1);
 }
@@ -211,7 +211,7 @@ frselectf2(Frame *f, Point p0, Point p1, Fcode c)
 {
 	int n;
 	int ht;
-	
+
 	if(p0.x == f->left)
 		p0.x = f->r.min.x;
 	if(p1.x == f->left)

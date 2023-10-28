@@ -392,7 +392,7 @@ user_delWin(rdWin *w)
  * we burn memory, assuming that swap space is cheaper than
  * downloading the info each time. I'm probably going to hell
  * for this.
- * 
+ *
  * 	switch (nw->kind) {
  * 		case nArtList:
  * 			freeGroupItems(nw->group);
@@ -583,7 +583,7 @@ findNWin(void *ptr)
 
 static void
 nQuit(rdWin *w, nGroup *g, int first, int last, char *arg)
-{	
+{
 	DPRINT("Quitting");
 	update_newsrc(groups);
 	nExit(w, g, first, last, arg);

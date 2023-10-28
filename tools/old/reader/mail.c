@@ -216,9 +216,9 @@ static struct mCmd mcmds[] = {
 	{ "deliver", MCCOMPART, mDeliver },
 	{ "savefile", MCANY, mSavefile },
 	{ "save", MCANY, mSave },
-	{ "multiart", MCANY, mMultiart}, 
-	{ "inc", MCCOMPART, mInclude}, 
-	{ "incall", MCCOMPART, mIncludeall}, 
+	{ "multiart", MCANY, mMultiart},
+	{ "inc", MCCOMPART, mInclude},
+	{ "incall", MCCOMPART, mIncludeall},
 	{ 0, 0, 0 }
 };
 

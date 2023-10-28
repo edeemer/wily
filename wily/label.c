@@ -59,24 +59,24 @@ data_find(char*label) {
 	label2path(path,label);
 	if(stat(path,&buf))
 		return 0;
-	
+
 	for(d=dataroot; d; d=d->next) {
 		data_restat(d);
 		if (d->has_stat && !statcmp(&buf, &d->stat))
 			return text_view(d->t);
 	}
-	
+
 	return 0;
 }
 
-/* If 'label' has changed under us, update 
+/* If 'label' has changed under us, update
  * some other information.
  */
 static void
 data_restat(Data*d) {
 	if(strcmp(d->label, d->cachedlabel)) {
 		Path	path;
-		
+
 		strcpy(d->cachedlabel, d->label);
 		label2path(path, d->label);
 		d->has_stat = !stat(path, &d->stat);

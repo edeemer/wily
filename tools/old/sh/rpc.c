@@ -27,7 +27,7 @@ main(int argc, char **argv)
 		fprintf(stderr,"usage: %s message-type [args]", argv[0]);
 		exit(1);
 	}
-	
+
 	type = argv[1];
 	t = name2type(type);
 	if(t<0) {

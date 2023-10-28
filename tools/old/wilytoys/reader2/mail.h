@@ -13,7 +13,7 @@ typedef struct _mWin mWin;
 
 /*
  * We know of several different kinds of window: mailbox lists,
- * message lists, displayed articles and messages being composed. 
+ * message lists, displayed articles and messages being composed.
  */
 
 enum {

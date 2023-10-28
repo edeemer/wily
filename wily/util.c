@@ -21,7 +21,7 @@ addcontext(char*dest, char*context, char*add){
 	if(strchr("/$~", add[0])){
 		strcpy(dest,add);
 		return;
-	} 
+	}
 	strcpy(dest, context);
 	if(!(s = strrchr(dest, '/'))){
 		label2path(dest, context);
@@ -55,7 +55,7 @@ statcmp(Stat*a, Stat*b) {
 Bool
 isdir(char*path) {
 	struct stat buf;
-	
+
 	return  !stat(path, &buf) && S_ISDIR(buf.st_mode);
 }
 
@@ -96,10 +96,10 @@ unfullutfbytes(char *s, int n) {
 }
 
 /*
- * Return Rstring for utf.  Either s.r0 == s.r1 == 0, 
+ * Return Rstring for utf.  Either s.r0 == s.r1 == 0,
  * or s.r0 will need to be free
  */
-Rstring 
+Rstring
 utf2rstring(char*utf)
 {
 	Rstring	s;
@@ -190,7 +190,7 @@ noutput(char *context, char *base, int n)
 	else
 		s = errwin +strlen(errwin);
 	strcpy(s, "+Errors");
-	
+
 	v = openlabel(errwin, true);
 	n = stripnulls(base, n);
 	base[n] = 0;
@@ -222,7 +222,7 @@ columnate(int totalwidth, int tabwidth, Font *f, char **item)
 	/* count the items */
 	nitems = 0;
 	c= item;
-	while(*c++) 
+	while(*c++)
 		nitems++;
 
 	if(!nitems)
@@ -356,7 +356,7 @@ ulong
 texttoutf(char *s, Rune *r1, Rune *r2) {
 	Rune	*q;
 	char	*t;
-	
+
 	if (r2 <= r1)
 		return 0;
 	for (t = s, q = r1; q < r2; q++)
@@ -488,7 +488,7 @@ utftotext(Rune *r, char *s1, char *s2)
 {
 	Rune	*q;
 	char	*v;
-	
+
 	if (s2 <= s1)
 		return 0;
 	for (v = s1, q = r; v < s2; ) {

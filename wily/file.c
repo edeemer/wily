@@ -27,12 +27,12 @@ data_open(char*label, Bool create) {
 	Stat	buf;
 	Path	path;
 	Bool	failure;
-	
+
 	label2path(path, label);
 
 	d = data_alloc();
 	failure = false;
-	
+
 	if(stat(path,&buf)) { /* doesn't exist -- yet */
 		if(create)
 			data_opennew(d, label, path);
@@ -41,7 +41,7 @@ data_open(char*label, Bool create) {
 	} else {
 		failure = data_getstat(d, label, path,&buf);
 	}
-	
+
 	if(failure){
 		data_listremove(d);
 		free(d);
@@ -50,20 +50,20 @@ data_open(char*label, Bool create) {
 		if(d->names)
 			add_slash(path);
 		data_settag(d, path);
-		win_new(path, d->tag, d->t); 
+		win_new(path, d->tag, d->t);
 		return text_view(d->t);
 	}
 }
 
 /*
- * Read file or directory 'label' into 'd'. 
+ * Read file or directory 'label' into 'd'.
  * Return 0 for success.
  */
 int
 data_get(Data *d, char *label) {
 	Stat	buf;
 	Path	path;
-	
+
 	if(data_backup(d))
 		return -1;		/* If we did this, we'd lose data */
 
@@ -84,7 +84,7 @@ data_get(Data *d, char *label) {
 static int
 data_getstat(Data*d, char* label, char*path, Stat*buf) {
 	int	failed;
-	
+
 	cursorswitch(&boxcursor);
 	bflush();
 	undo_reset(d->t);
@@ -95,7 +95,7 @@ data_getstat(Data*d, char* label, char*path, Stat*buf) {
 	undo_start(d->t);
 	if(!failed)
 		undo_mark(d->t);
-	
+
 	cursorswitch(cursor);
 	return failed;
 }
@@ -115,7 +115,7 @@ data_opennew(Data*d, char*label, char*path) {
 	text_replace(d->t, text_all(d->t), rstring(0,0));
 	undo_start(d->t);
 	undo_mark(d->t);
-	
+
 	/* d->tag */
 	tag_setlabel(d->tag, d->label);
 	tag_rmtool(d->tag, "Put");
@@ -127,17 +127,17 @@ data_opennew(Data*d, char*label, char*path) {
 static int
 data_getdir(Data*d, char*label, char*path, Stat*buf) {
 	DIR*	dirp;
-	
+
 	if((dirp = opendir(path)) == NULL) {
 		diag(0, "opendir [%s]", path);
 		return -1;	/* failure - modify nothing */
 	}
-	
+
 	/* d */
 	pathcontract(d->label,label);
 	add_slash(d->label);
 	strcpy(d->cachedlabel, d->label);
-	
+
 	d->has_stat = true;
 	d->stat = *buf;
 	data_setbackup(d,0);
@@ -146,7 +146,7 @@ data_getdir(Data*d, char*label, char*path, Stat*buf) {
 
 	/* d->t */
 	text_formatdir(d->t, d->names);
-	
+
 	/* d->tag */
 	tag_rmtool(d->tag, "Put");
 	tag_addtool(d->tag, "Get");
@@ -165,7 +165,7 @@ data_getfile(Data*d, char*label, char*path, Stat*buf) {
 		diag(path, "open [%s]", path);
 		return -1;	/* failure - modify nothing */
 	}
-	
+
 	/* d */
 	pathcontract(d->label, label);
 	strcpy(d->cachedlabel, d->label);
@@ -198,12 +198,12 @@ data_settag(Data*d, char *path) {
 	Path	buf;
 	char*common;
 	char*specific;
-	
+
 	common = d->names? dirtools : filetools;
 	specific = tag_match(path);
-	
-	sprintf (buf, "%s %s | %s %s ", d->label, 
-		d->names? "Get":"", 
+
+	sprintf (buf, "%s %s | %s %s ", d->label,
+		d->names? "Get":"",
 		common, specific);
 	tag_set(d->tag, buf);
 }
@@ -212,7 +212,7 @@ static Data *
 data_alloc(void) {
 	Data	*d;
 	static Id id;
-	
+
 	d = NEW(Data);
 	d->id = id++;
 	d->next = dataroot;
@@ -224,9 +224,9 @@ data_alloc(void) {
 	d->fd = 0;
 	d->emask = 0;
 	d->has_stat = false;
-	
+
 	strcpy(d->label, "");
 	strcpy(d->cachedlabel, "");
-	
+
 	return d;
 }

@@ -44,7 +44,7 @@ static void
 gall(Tile *tile) {
 	Tile	*t, *up = tile->up;
 	for (t = up->down; t; t=t->right) {
-		if (t != tile) 
+		if (t != tile)
 			t->ishidden = true;
 	}
 	tile->min = up->cmin;
@@ -70,7 +70,7 @@ tile_grow(Tile *tile, int buttons) {
 
 	switch (buttons) {
 	case 1:	gsome(tile);	break;
-	case 2:	gmost(tile);	break;	
+	case 2:	gmost(tile);	break;
 	case 4:	gall(tile);		break;
 	default:	gsome(tile);	break;
 	}

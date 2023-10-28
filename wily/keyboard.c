@@ -27,8 +27,8 @@ dokeyboard(View *v, Rune r) {
 	case End:
 	case LeftArrow:
 	case RightArrow:	view_cursor(v, r); 	break;
-	
-	case PageDown:	
+
+	case PageDown:
 	case PageUp:		view_pagedown(v,r==PageDown); break;
 
 	case Insert:		completename(v); break;
@@ -38,7 +38,7 @@ dokeyboard(View *v, Rune r) {
 	case Ctrlu:		deleteline(v); break;
 	case Ctrlw:		deleteword(v); break;
 	case Esc:			esc(v); break;
-	
+
 	case '\n':			if(!v->scroll){tag_cr(v); break; }
 	default:			addrune(v,r);
 	}
@@ -70,7 +70,7 @@ tag_cr(View*v) {
 static void
 searchorexec(View*v) {
 	char*cmd;
-	
+
 	if(!RLEN(v->sel)){
 		view_select(v, maybereverserange(v->anchor, v->sel.p0));
 	}
@@ -88,7 +88,7 @@ searchorexec(View*v) {
 static void
 backspace(View*v){
 	Range del = v->sel;
-	
+
 	if(del.p0)
 		del.p0--;
 	view_cut(v, del);
@@ -98,7 +98,7 @@ backspace(View*v){
 static void
 deleteline(View*v){
 	Range del = v->sel;
-	
+
 	del.p0 = text_startOfLine(v->t, del.p0);
 	view_cut(v, del);
 }
@@ -107,7 +107,7 @@ deleteline(View*v){
 static void
 deleteword(View*v){
 	Range del = v->sel;
-	
+
 	del.p0 = text_startofword(v->t, del.p0);
 	view_cut(v, del);
 }
@@ -115,10 +115,10 @@ deleteword(View*v){
 static void
 esc(View*v) {
 	Range del = v->sel;
-	
+
 	if ((RLEN(del))) {
 		/* delete selected text */
-		view_cut(v, del);	
+		view_cut(v, del);
 	} else {
 		/* Select from v->anchor to v->sel.p0 */
 		view_select(v, maybereverserange(v->anchor, v->sel.p0));
@@ -145,7 +145,7 @@ addrune(View*v, Rune r) {
 
 /*
  * We've hit a cursor key.
- * 
+ *
  * Set the selection to something relative to previous sel.p0, and
  * make sure the new selection is visible.
  */

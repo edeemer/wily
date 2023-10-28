@@ -60,7 +60,7 @@ dobutton(View *v, Mouse *orig) {
 
 	/* aborted by pressing a different button? */
 	if(m.buttons)
-		return;	
+		return;
 
 	if (distance(m.xy, orig->xy) < SMALLDISTANCE) {
 		tile_grow(tile, orig->buttons);
@@ -150,7 +150,7 @@ action(View *v, Mouse *m, Range r, ulong oldbuttons) {
 	} else if (oldbuttons & MIDDLE) {
 		if(m->buttons) {
 			if(m->buttons&LEFT)	/* chord */
-				b2(v,r,true);	
+				b2(v,r,true);
 			while (m->buttons)	/* wait for button up */
 				*m = emouse();
 		} else {
@@ -218,7 +218,7 @@ doscroll(View *v, Mouse	*m ) {
 		}
 		type = eread(Emouse|timer,&e);
 	} while (!(type ==Emouse && m->buttons != buttons));
-	estoptimer(timer);	
+	estoptimer(timer);
 	/* stop the timer */
 
 	/* wait for buttons up */

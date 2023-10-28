@@ -12,19 +12,19 @@ tile_hidden(Tile *t) {
 }
 
 /** 't' contains p.
- * Return the lowest-level subtile which 
+ * Return the lowest-level subtile which
  * still contains 'p'
  **/
 View*
 tile_containingView(Tile *t, Point p) {
 	/* 't' contains 'p' */
 	assert(t && ptinrect(p, t->r));
-	
+
 	if(ptinrect(t->tagr, p))
 		return t->tag;
 	if (t->type == TILE_WIN)
 		return t->c.body;
-	
+
 	return tileSet_containingView(&t->c.children, p);
 }
 
@@ -32,9 +32,9 @@ View*
 tileSet_containingView(TileSet *ts, Point p) {
 	int	j;
 	Tile	*t;
-	
+
 	assert(t && ptinrect(p, ts->r));
-	
+
 	/* todo(optimize): we could save some comparisons
 	 * by making use of the fact that the tiles are in order and
 	 * abut one another
@@ -52,15 +52,15 @@ tile_reshaped(Tile *t, Rectangle r) {
 	t->tagr = t->contentsr = r;
 	t->tagr.maxy = t->contentsr.miny =
 		t->tagr.miny + tag_height(t->tag);
-	
+
 	tag_reshaped(t->tag, t->tagr);
-	
+
 	if(t->type == TILE_WINDOW) {
 		view_reshaped(t->c.body, t->contentsr);
 	} else {
 		tileSet_reshaped(&t->c.children, t->contentsr);
 	}
-	
+
 	assert(tile_invariant(t));
 }
 
@@ -69,7 +69,7 @@ tileSet_reshaped(TileSet *ts, Rectangle r) {
 	ts->r = r;
 	/* set sizes */
 	tileSet_setsizes(ts,r);
-	
+
 	/* reshape children */
 	for(int j=0; j<ts->ntiles; j++) {
 		t = ts->tile[j];
@@ -89,7 +89,7 @@ tileSet_reshaped(TileSet *ts, Rectangle r) {
 	}
 }
 
-/* 
+/*
 * Adjust the sizes of the children, redisplay them if necessary.
 * We can assume that all of the
 * tiles have the right approximate size, but that's it.
@@ -215,7 +215,7 @@ tile_unlink(Tile*tile){
 	} else {
 		tile->up->down = tile->right;
 	}
-	
+
 	list_unhide(tile->up);
 	cls(rectangle(tile));
 	list_reshaped(tile->up, 0);
@@ -336,7 +336,7 @@ moveto(Tile*t, int pos)
 
 /* Create (but don't display) a new tile */
 Tile*
-tile_new(Ori ori, int min, int max, int base, 
+tile_new(Ori ori, int min, int max, int base,
 	Tile*parent, Text *tagt, Text*bodyt){
 	Tile*tile = NEW(Tile);
 	int	minsize;
@@ -355,7 +355,7 @@ tile_new(Ori ori, int min, int max, int base,
 	minsize = tile_minsize(tile);
 	if(TILESIZE(tile) < minsize)
 		tile->max = tile->min + minsize;
-	
+
 	return tile;
 }
 
@@ -406,7 +406,7 @@ tileSet_invariant(TileSet *t) {
 		assert(diff >= 0);
 		assert (diff <= tag);
 	}
-	
+
 	return true;
 }
 
@@ -481,7 +481,7 @@ adjust_position(Tile *t) {
 			available -= move;
 		}
 	}
-	
+
 	/* move t->min up a bit? */
 	diff = t->max - (l->cmax - after);
 	if (diff>0) {

@@ -127,7 +127,7 @@ text_strregexp(Text *t,  String str, Range *r, Bool fwd)
 	if (setjmp(regexp_state)) {
 		found = false;
 		goto out;
-	} 
+	}
 	found =false;
 	if (do_compile(&str)) {
 		fprintf(stderr, "regexp: compilation failed\n");
@@ -187,7 +187,7 @@ text_regexp(Text *t, Rstring re, Range *r, Bool fwd)
 long
 Tchars(Text *t, Rune *buf, ulong p0, ulong p1) {
 	Range	r;
-	
+
 	assert(p0 <= p1);
 	r = range( p0, MIN(p1, t->length));
 	text_copy(t, r, buf);

@@ -1,6 +1,6 @@
 /***********************************************************
  *	Functions to do with finding/counting lines.
- *	
+ *
  *	Currently Wily doesn't keep track of line boundaries,
  *	and searches for them when it needs to.  These functions
  *	are all in the one file in case we ever decide to cache any
@@ -66,10 +66,10 @@ text_lastline(Text *t) {
 	return range(t->pos+1, t->length);
 }
 
-/* 
+/*
  * Find the offset of the first character of the line 'delta' away from 'pos'.
  *'delta' may be positive or negative.
- * 
+ *
  * text_nl(t, pos, 0):	start of current line
  * text_nl(t, pos, -1):	start of line above
  * text_nl(t, pos, 1):	start of line below
@@ -80,7 +80,7 @@ text_nl(Text *t, ulong pos, int delta) {
 	ulong	retval;
 
 	assert(pos <= t->length);
-	
+
 	if(delta > 0) {
 		Tgetcset(t, pos);
 		while ( (c=Tgetc(t)) != -1 )
@@ -103,7 +103,7 @@ text_nl(Text *t, ulong pos, int delta) {
 ulong
 text_startOfLine(Text *t, ulong p) {
 	int c;
-	
+
 	Tbgetcset(t,p);
 	do {
 		c=Tbgetc(t);

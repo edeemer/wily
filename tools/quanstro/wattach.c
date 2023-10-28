@@ -22,7 +22,7 @@ void exits(const char*whine){
 	exit(0);
 }
 
-const char* 
+const char*
 decode(Msg* m){
 	switch(m->t){
 	default:

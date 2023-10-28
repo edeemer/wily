@@ -14,7 +14,7 @@ struct Tile {
 	int	size;			/* current actual size (maybe zero) */
 	int 	desiredSize; 	/* remember a good size if we're minimized */
 	int	minSize;		/* minimum usable size */
-	
+
 	/* Depending on 'type', we might contain a 'body', or
 	 * a set of children
 	 */

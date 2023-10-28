@@ -31,7 +31,7 @@ load_data(ulong p0, ulong p1, int *len)
 
 	sz = length * (sizeof(Rune)+1);
 	s = utffile = srealloc(utffile, sz);
-	
+
 	if (!fp && (fp = fopen(tmpfilename,"r")) == 0) {
 		perror(tmpfilename);
 		exit(1);

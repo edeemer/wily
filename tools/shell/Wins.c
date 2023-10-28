@@ -16,17 +16,17 @@ main(int argc, char**argv) {
 	Handle	*handle;
 	char 		*wins;
 	char		*errstr;
-	
+
 	/* Obtain file descriptor */
 	fd = client_connect();
 	if (fd<0) {
 		ehandle("client_connect");
 	}
-	
+
 	/* Obtain handle */
 	handle = rpc_init(fd);
 	assert(handle != 0);
-	
+
 	/* Grab the list */
 	errstr = rpc_list(handle, &wins);
 	if(errstr) {
@@ -35,6 +35,6 @@ main(int argc, char**argv) {
 
 	/* Print it */
 	printf("%s\n", wins);
-	
+
 	return 0;
 }

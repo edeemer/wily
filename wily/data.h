@@ -14,7 +14,7 @@ The label can start with:
 	~	meaning a home-dir, e.g. ~/, ~i/
 anything else is interpreted relative to the directory wily started in.
 
-If the window is a directory, the label should 
+If the window is a directory, the label should
 end with a /
 
 If we represent some file which should be backed up,
@@ -40,7 +40,7 @@ We only update 'has_stat' and 'stat' when necessary.
 struct Data {
 	Text		*t;
 	Text		*tag;
-	Data 	*next;	
+	Data 	*next;
 	Path		label, cachedlabel;
 	/* Path		path;	*/
 	Bool		has_stat;
@@ -50,9 +50,9 @@ struct Data {
 	/* for object connected to some external process */
 	int		fd;
 	ushort	emask;
-	
+
 	Id		id;		/* Unique identifier */
-	
+
 	char		**names;	/* cache of names of files in this directory, or 0 */
 };
 

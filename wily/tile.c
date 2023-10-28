@@ -19,18 +19,18 @@ tile_invariant(Tile *tile) {
 	assert(tile);
 
 	/* Can't have _both_ a body and and a child */
-	assert(!(tile->body && tile->down));	
+	assert(!(tile->body && tile->down));
 
 	if(tile->ishidden)
 		return true;
-		
+
 	/* Tests for non-hidden tiles */
 	size = TILESIZE(tile);
 	assert( size >= tile->base);
-	
+
 	if (!tile->body)
 		return true;
-	
+
 	/* Tests for tiles with bodies, i.e. windows */
 
 	/*
@@ -51,7 +51,7 @@ tile_invariant(Tile *tile) {
 		assert(diff >= 0);
 		assert (diff <= tag);
 	}
-	
+
 	return true;
 }
 
@@ -60,7 +60,7 @@ list_invariant(Tile *list) {
 	int	prev;
 	Tile	*t;
 	int	diff;
-	
+
 	assert(tile_invariant(list));	/* A list is also a tile */
 
 	assert(!list->body);			/* Lists don't have bodies */
@@ -226,7 +226,7 @@ adjust_position(Tile *t) {
 			available -= move;
 		}
 	}
-	
+
 	/* move t->max up a bit? */
 	diff = t->max - (l->cmax - after);
 	if (diff>0) {
@@ -237,7 +237,7 @@ adjust_position(Tile *t) {
 	}
 }
 
-/* 
+/*
 * Adjust the sizes of the children, redisplay them if necessary.
 * Avoid moving or resizing 't'.  Ensure that 't' remains visible.
 * We can assume that all of the
@@ -319,7 +319,7 @@ tile_unlink(Tile*tile){
 	} else {
 		tile->up->down = tile->right;
 	}
-	
+
 	list_unhide(tile->up);
 	cls(rectangle(tile));
 	list_reshaped(tile->up, 0);
@@ -442,7 +442,7 @@ moveto(Tile*t, int pos)
 
 /* Create (but don't display) a new tile */
 Tile*
-tile_new(Ori ori, int min, int max, int base, 
+tile_new(Ori ori, int min, int max, int base,
 	Tile*parent, Text *tagt, Text*bodyt)
 {
 	Tile*tile = NEW(Tile);
@@ -462,7 +462,7 @@ tile_new(Ori ori, int min, int max, int base,
 	minsize = tile_minsize(tile);
 	if(TILESIZE(tile) < minsize)
 		tile->max = tile->min + minsize;
-	
+
 	return tile;
 }
 

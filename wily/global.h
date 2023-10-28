@@ -1,5 +1,5 @@
 /* wily.c */
-extern char*filetools; 
+extern char*filetools;
 extern char*dirtools;
 
 /* global.c */

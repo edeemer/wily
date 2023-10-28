@@ -72,7 +72,7 @@ domsg(Msg *m)
 			printf("message received and ignored: ");
 			msg_print(m);
 		}
-		break;	
+		break;
 	}
 }
 

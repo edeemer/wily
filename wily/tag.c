@@ -8,7 +8,7 @@
 #include <string.h>
 #include <ctype.h>
 
-/* The tag for a window contains: a label then whitespace, then some 
+/* The tag for a window contains: a label then whitespace, then some
  * system-maintained tools, then a pipe symbol, then user stuff.
  */
 
@@ -25,7 +25,7 @@ static Bool		wily_modifying_tag = false;
 char*
 tag_gettools(Text*t){
 	Range r;
-	
+
 	r = nr;
 	if(text_utfregexp(t, "\\|.*", &r, true)) {
 		r.p0++;
@@ -39,7 +39,7 @@ void
 tag_settools(Text*t, char*s) {
 	Range r = nr;
 	ulong	len;
-	
+
 	if(text_utfregexp(t, "\\|.*", &r, true)) {
 		r.p0++;
 	} else {
@@ -68,7 +68,7 @@ tag_setlabel(Text *t, char *s)
 	Range	r;
 	Path		buf;
 	ulong	l;
-	
+
 	wily_modifying_tag = true;
 
 	/* find first whitespace_regexp */
@@ -90,7 +90,7 @@ void
 tag_rmtool(Text *t, char *s)
 {
 	Range	r;
-	
+
 	wily_modifying_tag = true;
 
 	r = tag_findtool(t, s);
@@ -105,12 +105,12 @@ tag_rmtool(Text *t, char *s)
 static void
 place_tool(Text*t, Range r, char*s) {
 	Path	tmp;
-	
+
 	sprintf(tmp, "%s ", s);
 	text_replaceutf(t,r,tmp);
 }
 
-/* 
+/*
  * Add a string to represent a running command to 't'.
  *
  * Almost the same as tag_addtool, the difference being
@@ -120,7 +120,7 @@ place_tool(Text*t, Range r, char*s) {
 void
 tag_addrunning(Text *t, char *cmd) {
 	Range	r;
-	
+
 	r = tag_findtool(t,cmd);
 	r.p0  = r.p1;	/* don't replace */
 	place_tool(t,r,cmd);
@@ -134,7 +134,7 @@ tag_addtool(Text *t, char *s)
 	Range	r;
 
 	wily_modifying_tag = true;
-	
+
 	r = tag_findtool(t,s);
 	if(!RLEN(r))
 		place_tool(t,r,s);
@@ -177,11 +177,11 @@ tag_modified(Text*t, ulong p) {
 	Range	r;
 	Path		buf;
 	int		n;
-	
+
 	assert(t->data && TEXT_ISTAG(t));
 	if( wily_modifying_tag)
 		return;
-	
+
 	/* find first whitespace_regexp */
 	r = nr;
 	if(text_utfregexp(t, whitespace_regexp, &r, true)) {

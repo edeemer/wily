@@ -385,7 +385,7 @@ static void
 LoseSel(Widget w, Atom *sel)
 {
 	GwinWidget gw = (GwinWidget)w;
-	
+
 	if(gw->gwin.selection){
 		XtFree(gw->gwin.selection);
 		gw->gwin.selection = 0;
@@ -570,7 +570,7 @@ get_selection(Widget w)
 			CurrentTime);
 #else
 	XtGetSelectionValue(w, XInternAtom(XtDisplay(w), "PRIMARY", 0),
-			XInternAtom(XtDisplay(w), "UTF8_STRING", 0), 
+			XInternAtom(XtDisplay(w), "UTF8_STRING", 0),
 			SelCallback, 0,
 			XtLastTimestampProcessed(XtDisplay(w)));
 #endif
