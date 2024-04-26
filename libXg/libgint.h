@@ -1,16 +1,8 @@
 /* Copyright (c) 1992 AT&T - All rights reserved. */
 /* internal libg implementation file - include after libg */
 
-/*
- * include defs of standard library routines, if possible,
- * and string routines
- */
-#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
-#endif
-#ifdef STDC_HEADERS
 #include <string.h>
-#endif /* STDC_HEADERS */
 
 /*
  * use defines to rename X11 types Cursor, Font, Event

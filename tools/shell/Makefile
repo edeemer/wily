@@ -1,22 +1,24 @@
-# 9term
-CC=gcc
-WILY=$(h)/src/wily
-BINDIR=$(h)/obj/sun4d/wily
-CFLAGS=-g -Wall -I. -I$(WILY)/include -I$(WILY)/sam/include -I$(BINDIR)
-LIBS=-L$(BINDIR)/libmsg -lmsg -lsocket -lnsl -lintl
+root=../..
+ALLCFLAGS=$(CFLAGS) -g -Wall -I$(root)/include
+ALLIBS=$(LIBS) $(root)/libmsg/libmsg.a
 
-TARGETS=	Wgoto Wexec Wins 
+TARGETS=Wgoto Wexec Wins
 OBJECTS=$(TARGETS:%=%.o)
 
-$(TARGETS):
+.SUFFIXES: .c .o
+
+all: $(TARGETS)
+
+.c.o:
+	$(CC) $(ALLCFLAGS) -c $<
 
 Wins:	Wins.o
-	gcc -o Wins Wins.o $(LIBS) 
+	$(CC) $(ALLCFLAGS) $(LDFLAGS) -o Wins Wins.o $(ALLIBS)
 Wexec:	Wexec.o
-	gcc -o Wexec Wexec.o $(LIBS) 
+	$(CC) $(ALLCFLAGS) $(LDFLAGS) -o Wexec Wexec.o $(ALLIBS)
 Wgoto:	Wgoto.o
-	gcc -o Wgoto Wgoto.o $(LIBS) 
+	$(CC) $(ALLCFLAGS) $(LDFLAGS) -o Wgoto Wgoto.o $(ALLIBS)
 clean:
-	- rm $(OBJECTS)
+	rm -f $(OBJECTS)
 nuke:
-	- rm $(OBJECTS) $(TARGETS)
+	rm -f $(OBJECTS) $(TARGETS)

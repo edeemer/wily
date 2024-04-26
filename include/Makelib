@@ -1,9 +1,16 @@
+AR=ar
+RANLIB=ranlib
+
+.SUFFIXES: .c .o
+
 all install:	$(LIB)
 clean:
-	rm -f *.o *pure* .pure test
+	rm -f *.o
 nuke:	clean
 	rm -f $(LIB)
 $(LIB):	$(OBJS)
 	$(AR) rv $(LIB) $(OBJS)
 	$(RANLIB) $(LIB)
-# $(LIB)(%.o): %.o
+
+.c.o:
+	$(CC) $(CFLAGS) $(XTRACFLAGS) -c $<

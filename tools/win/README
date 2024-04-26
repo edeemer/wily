@@ -3,7 +3,8 @@ base wily directory (i.e., in the same directory as libmsg). It
 includes a pseudo-terminal based terminal emulator, commands to search
 for and replace text, a manual page interface, and a tags interface.
 
-See INSTALL for instructions on compiling and installing.
+Before compiling, check that DEFS in Makefile correspond to your
+system's TTY handling style.
 
 Please send bug reports to the author at alan@oldp.nmsu.edu.
 

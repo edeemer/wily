@@ -10,7 +10,3 @@ Wexec cmd id
 	Execute cmd (as if selected with b2), in context of id
 Wgoto path id
 	Goto 'path' (as if selected with b3), in context of id
-
-
-# NB this is *guaranteed* _not_ to compile "out of the box",
-you'll need a Makefile that isn't stupid, like the current one.

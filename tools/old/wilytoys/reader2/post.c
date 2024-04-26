@@ -198,7 +198,7 @@ nDeliver(rdWin *w, nGroup *g, int first, int last, char *arg)
 		dodeliver(w,filename);
 	if (nw->ispost)
 		nntpPost(filename);
-	(void)remove(filename);
+	(void)unlink(filename);
 	DPRINT("Deliver done");
 	closeWin(w);
 	freeNWin(nw);

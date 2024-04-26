@@ -72,7 +72,7 @@ do_changes(int (*changed)(Rune **r0, Rune **r1, Rune **r2, Rune **r3))
 		copyfile(origpos, runefile.nrunes, tmpfp);
 	fclose(tmpfp);
 	if (modified) {
-		remove(tmpfilename);
+		unlink(tmpfilename);
 		strcpy(tmpfilename, newtmpfile);
 	}
 	return;

@@ -122,11 +122,11 @@ main(int argc, char**argv)
 	read_info(1);		/* reverse and coalese ranges */
 	if (!modified) {
 		DPRINT("Not changed - just removing file\n");
-		remove(tmpfilename);
+		unlink(tmpfilename);
 		return 0;
 	}
 	connect_wily(origfile, origaddr);
 	send_data();
-	remove(tmpfilename);
+	unlink(tmpfilename);
 	return 0;
 }

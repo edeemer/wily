@@ -13,11 +13,7 @@
 Wily is an emulation of Acme. Acme was written by Rob Pike.  Nearly all of
 the nifty ideas (but none of the source code) in Wily are taken from Acme.
 
-Read INSTALL for hints on how to build.
-
-Ignore error messages like "no libXg configuration in dir sam"
-
-If 'make' fails, try 'gmake' (GNU make).
+Run 'make' to build and 'make install' to install.
 
 Mail wilyfans-request@jli.com to subscribe to a list discussing wily
 (and to find out about new releases).

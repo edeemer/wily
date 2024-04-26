@@ -48,7 +48,7 @@ handleread(Msg *m)
 			s += chartorune(&r, s);
 		if (fwrite(&r, sizeof(r), 1, fp) != 1) {
 			perror(tmpfilename);
-			remove(tmpfilename);
+			unlink(tmpfilename);
 			exit(1);
 		}
 	}

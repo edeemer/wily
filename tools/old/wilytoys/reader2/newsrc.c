@@ -64,7 +64,7 @@ void
 unlock_newsrc(void)
 {
 	DPRINT("Unlocking newsrc");
-	remove(lockname);
+	unlink(lockname);
 	DPRINT("Newsrc unlocked");
 }
 
@@ -209,7 +209,7 @@ update_newsrc(nGroup *groups)
 	}
 	if (fclose(fp)) {
 		perror(newsrctmp);
-		remove(newsrctmp);
+		unlink(newsrctmp);
 		return 1;
 	}
 	if (rename(newsrcname, newsrcold) || rename(newsrctmp, newsrcname)) {

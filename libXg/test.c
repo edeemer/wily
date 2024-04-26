@@ -1,8 +1,6 @@
 /* Copyright (c) 1992 AT&T - All rights reserved. */
 #include <libc.h>
-#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
-#endif
 #include <libg.h>
 #include <stdio.h>
 

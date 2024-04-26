@@ -10,17 +10,23 @@
 #include <signal.h>
 #include <ctype.h>
 
-#include <unistd.h>
+#include <sys/time.h>
 #include <sys/types.h>
-#ifdef HAVE_SYS_SELECT_H
-#include <sys/select.h>
-#endif
+#include <unistd.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <sys/ioctl.h>
 #include <termios.h>
 #if HAVE_SYS_PTEM_H
 #include <sys/stropts.h>
+#endif
+
+#if !defined(GETPTY) && !defined(DEV_PTMX) && !defined(DEV_PTY)
+#if defined(__linux__)
+  #define DEV_PTMX
+#else
+  #define DEV_PTY
+#endif
 #endif
 
 int shellpid;
@@ -656,7 +662,7 @@ handlemsg(void)
 void
 openmaster(void)
 {
-	#if HAVE__GETPTY
+	#if defined(GETPTY)
 
 	/* e.g., on IRIX */
 
@@ -670,7 +676,7 @@ openmaster(void)
 		}
 	}
 
-	#elif HAVE_DEV_PTMX
+	#elif defined(DEV_PTMX)
 
 	/* e.g., on Digital UNIX or Solaris */
 
@@ -703,7 +709,7 @@ openmaster(void)
 
 	}
 
-	#else
+	#elif defined(DEV_PTY)
 
 	/* e.g., on BSD */
 
@@ -731,6 +737,8 @@ openmaster(void)
 		slavename = name;
 	}
 
+	#elif
+		#error "failed to determine TTY handling type"
 	#endif
 }
 

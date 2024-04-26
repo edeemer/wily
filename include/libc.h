@@ -51,12 +51,5 @@ extern	char*	utfutf(char*, char*);
 /*
  *	Miscellaneous functions
  */
-#ifdef	NEEDVARARG
-extern	void	fprint();
-#else
-extern	void	fprint(int, char *, ...);
-#endif
 extern	int	notify (void(*)(void *, char *));
-extern	int	errstr(char *);
-extern	char*	getuser(void);
 extern	void	exits(char*);
