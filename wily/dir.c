@@ -14,13 +14,6 @@ mycmp (const void *a, const void *d) {
 	return strcmp(*(char**)a, *(char**)d);
 }
 
-/* A few OS's have file systems that know which files in a directory are dirs. */
-#ifdef DT_DIR
-#define CHECKDIR(dp)	((dp)->d_type == DT_DIR)
-#else
-#define CHECKDIR(dp)	(0)
-#endif
-
 /*
  * Read 'dirp', return null-terminated array of strings representing the
  * files in the directory.  Both the strings and the array need to be
@@ -30,7 +23,6 @@ mycmp (const void *a, const void *d) {
  */
 char **
 dirnames (DIR *dirp, char *path) {
-	struct stat		statbuf;
 	struct dirent	*direntp;
 	char		*name;
 	char		**list;
@@ -59,8 +51,7 @@ dirnames (DIR *dirp, char *path) {
 			list = (char**) srealloc(list, maxnames * sizeof(char*));
 		}
 
-		if (CHECKDIR(direntp) ||
-				(stat(name, &statbuf) >= 0 && S_ISDIR(statbuf.st_mode))) {
+		if(isdirentdir(direntp)) {
 			Path	buf;
 
 			sprintf(buf, "%s/", name);

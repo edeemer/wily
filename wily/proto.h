@@ -207,7 +207,7 @@ void		dirnametrunc		(char*);
 void		addcontext		(char*, char*, char*);
 void		olabel			(char*out, char*label);
 int		statcmp			(Stat*a, Stat*b);
-Bool		isdir				(char*path);
+Bool		isdirentdir			(struct dirent*dirent);
 int		backup_name		(char *orig, char *back);
 char *	columnate		(int, int, Font *, char **);
 void		noutput			(char *context, char *base, int n);

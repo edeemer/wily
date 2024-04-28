@@ -8,6 +8,13 @@
 #include <errno.h>
 #include <dirent.h>
 
+/* A few OS's have filesystems that know which files in a directory are dirs. */
+#ifdef DT_DIR
+#define CHECKDIR(dp)	((dp)->d_type == DT_DIR)
+#else
+#define CHECKDIR(dp)	(0)
+#endif
+
 void
 dirnametrunc(char*s){
 	if((s=strrchr(s,'/')))
@@ -53,10 +60,12 @@ statcmp(Stat*a, Stat*b) {
 }
 
 Bool
-isdir(char*path) {
+isdirentdir(struct dirent*dirent) {
 	struct stat buf;
 
-	return  !stat(path, &buf) && S_ISDIR(buf.st_mode);
+	if(CHECKDIR(dirent))
+		return true;
+	return !stat(dirent->d_name, &buf) && S_ISDIR(buf.st_mode);
 }
 
 /*

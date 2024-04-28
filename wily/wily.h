@@ -14,6 +14,7 @@
 #include <assert.h>
 #define IMPLIES(a,b) (!(a)||(b))
 
+#include <dirent.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "const.h"

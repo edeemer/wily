@@ -132,7 +132,7 @@ complete(char *dir, char *name, char *res) {
 		}
 		else {
 			strncpy(res, last->d_name, lastlen);
-			res[lastlen] = last->d_type&DT_DIR ? '/' : ' ';
+			res[lastlen] = isdirentdir(last) ? '/' : ' ';
 			res[lastlen+1] = '\0';
 		}
 	} else {
