@@ -18,6 +18,8 @@
 #define XtCP9fixed "P9fixed"
 #define XtNcomposeMod   "composeMod"
 #define XtCComposeMod   "ComposeMod"
+#define XtNtabsize "tabsize"
+#define XtCTabsize "Tabsize"
 
 /* External reference to the class record pointer */
 extern WidgetClass gwinWidgetClass;

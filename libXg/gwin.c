@@ -50,7 +50,9 @@ static XtResource resources[] = {
 	{XtNp9fixed, XtCP9fixed, XtRString, sizeof(String),
 		Offset(p9fixed), XtRString, (XtPointer) NULL},
 	{XtNcomposeMod, XtCComposeMod, XtRInt, sizeof(int),
-		Offset(compose), XtRImmediate, (XtPointer) 0}
+		Offset(compose), XtRImmediate, (XtPointer) 0},
+	{XtNtabsize, XtCTabsize, XtRInt, sizeof(int),
+		Offset(tabsize), XtRImmediate, (XtPointer) 4}
 };
 #undef Offset
 
