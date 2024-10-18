@@ -89,6 +89,8 @@ args(int argc,char **argv, char **envp)
 		default:	usage(); break;
 		}
 	}
+	if (tabsize <= 0)
+		tabsize = 4;
 	scroll_init();
 	einit(Ekeyboard | Emouse);
 	cursorswitch(cursor);
